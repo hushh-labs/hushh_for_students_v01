@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "621906786515",
+    "project_id": "project-gemini-45a06",
+    "storage_bucket": "project-gemini-45a06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621906786515:android:e3d145a0908eeef92dbc26",
+        "android_client_info": {
+          "package_name": "com.example.project_gemini"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621906786515-nikq0om4r1k9bjjdaj8aesjb88b8d49s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.project_gemini",
+            "certificate_hash": "44eafadcd712409c54560117fa52b154632966a1"
+          }
+        },
+        {
+          "client_id": "621906786515-6agfe0rtojgm3gh4g7fucn7jma9amue6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCk8QAdNXZRBy4W_2NM7ymNNbFSIaxMG-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "621906786515-6agfe0rtojgm3gh4g7fucn7jma9amue6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

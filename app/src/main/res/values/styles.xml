@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="label">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#118CFD</item>
+    </style>
+
+    <style name="logo_text">
+        <item name="android:textSize">18.95sp</item>
+    </style>
+
+</resources>

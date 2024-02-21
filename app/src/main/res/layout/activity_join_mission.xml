@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".JoinMissionAct">
+
+    <ImageView
+        android:id="@+id/imageView22"
+        android:layout_width="match_parent"
+        android:layout_height="174dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/headercoinenagegement"
+        app:layout_constraintBottom_toBottomOf="@+id/cnly1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:src="@drawable/headercurvehussengage"
+        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cnly1" />
+
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cnly1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="6dp"
+            android:src="@drawable/user_hushh"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="0dp"
+            android:layout_height="30sp"
+            android:layout_marginLeft="8dp"
+            android:text="TextView"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView5" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:lineSpacingExtra="1sp"
+            android:text="Welcome Back,"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline22"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView11" />
+
+        <ImageView
+            android:id="@+id/textViewBalance"
+            android:layout_width="105dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/textbalance"
+            app:layout_constraintStart_toStartOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+        <TextView
+            android:id="@+id/textViewUserDetails"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="4dp"
+            android:paddingTop="3dp"
+            android:text="Welcome Back"
+            android:textColor="#fff"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewBalance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewBalance"
+            app:layout_constraintTop_toTopOf="@+id/textViewBalance" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="42dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cnly1"
+        app:layout_constraintStart_toStartOf="@+id/cnly1"
+        app:layout_constraintTop_toBottomOf="@+id/textView19">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView21"
+                android:layout_width="169dp"
+                android:layout_height="172dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/cardmissionsappengagement" />
+
+            <ImageView
+                android:id="@+id/jm1appengagement"
+                android:layout_width="145dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="124dp"
+                android:src="@drawable/btnjoinmission"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@+id/imageView21"
+                app:layout_constraintStart_toStartOf="@+id/imageView21"
+                app:layout_constraintTop_toTopOf="@+id/imageView21" />
+
+            <ImageView
+                android:id="@+id/imageView23"
+                android:layout_width="169dp"
+                android:layout_height="172dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView21"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/linkedinbliss" />
+
+            <ImageView
+                android:id="@+id/jm2appengagement"
+                android:layout_width="145dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="124dp"
+                android:src="@drawable/btnjoinmission"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@+id/imageView23"
+                app:layout_constraintStart_toStartOf="@+id/imageView23"
+                app:layout_constraintTop_toTopOf="@+id/imageView23" />
+
+            <ImageView
+                android:id="@+id/cm2appengagement"
+                android:layout_width="145dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="124dp"
+                android:src="@drawable/coinscollected"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/imageView23"
+                app:layout_constraintStart_toStartOf="@+id/imageView23"
+                app:layout_constraintTop_toTopOf="@+id/imageView23" />
+
+
+
+            <ImageView
+                android:id="@+id/imageView24"
+                android:layout_width="169dp"
+                android:layout_height="172dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView21"
+                app:layout_constraintTop_toBottomOf="@+id/imageView21"
+                app:srcCompat="@drawable/cardengagement" />
+
+            <ImageView
+                android:id="@+id/jm3cardengagement"
+                android:layout_width="145dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="124dp"
+                android:src="@drawable/btnjoinmission"
+                app:layout_constraintEnd_toEndOf="@+id/imageView24"
+                app:layout_constraintStart_toStartOf="@+id/imageView24"
+                app:layout_constraintTop_toTopOf="@+id/imageView24" />
+
+            <ImageView
+                android:id="@+id/imageView25"
+                android:layout_width="169dp"
+                android:layout_height="172dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView23"
+                app:layout_constraintStart_toStartOf="@+id/imageView23"
+                app:layout_constraintTop_toBottomOf="@+id/imageView21"
+                app:srcCompat="@drawable/instagrambliss" />
+
+            <ImageView
+                android:id="@+id/jm4purchaseengagement"
+                android:layout_width="145dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="124dp"
+                android:src="@drawable/btnjoinmission"
+                app:layout_constraintEnd_toEndOf="@+id/imageView25"
+                app:layout_constraintStart_toStartOf="@+id/imageView25"
+                app:layout_constraintTop_toTopOf="@+id/imageView25" />
+
+            <ImageView
+                android:id="@+id/imageView26"
+                android:layout_width="169dp"
+                android:layout_height="172dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView24"
+                app:layout_constraintStart_toStartOf="@+id/imageView24"
+                app:layout_constraintTop_toBottomOf="@+id/imageView24"
+                app:srcCompat="@drawable/gamifiedcahllangecard" />
+
+            <ImageView
+                android:id="@+id/jm5gamifiedcahllange"
+                android:layout_width="145dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="124dp"
+                android:src="@drawable/btnjoinmission"
+                app:layout_constraintEnd_toEndOf="@+id/imageView26"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView26" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="118dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="312dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="486dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Join Missions"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/cnly1"
+        app:layout_constraintStart_toStartOf="@+id/cnly1"
+        app:layout_constraintTop_toBottomOf="@+id/cnly1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

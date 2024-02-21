@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
+    <uses-feature
+        android:name="android.hardware.fingerprint"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Project_Gemini"
+        tools:targetApi="31" >
+        <activity
+            android:name=".CheckoutMenuAct"
+            android:exported="false" />
+        <activity
+            android:name=".MenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageCoinsAct"
+            android:exported="false" />
+        <activity
+            android:name=".CoinsDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".Checkout_Bills"
+            android:exported="false" />
+        <activity
+            android:name=".JoinMissionAct"
+            android:exported="false" />
+        <activity
+            android:name=".HushhCoinsEarnedAct"
+            android:exported="false" />
+        <activity
+            android:name=".AgentHomeAct"
+            android:exported="false" />
+        <activity
+            android:name=".Register_Agent_Act"
+            android:exported="false" />
+        <activity
+            android:name=".User_Agent_Act"
+            android:exported="false" />
+        <activity
+            android:name=".ShowHomeCardAct"
+            android:exported="false" />
+        <activity
+            android:name=".ShowFinalCardAct"
+            android:exported="false" />
+        <activity
+            android:name=".ShowCardDetailsAct"
+            android:exported="false" />
+        <activity
+            android:name=".NewCardMarketAct"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCQFDAnS7c3aM8FqqzrRForrWLgr_eNpUk" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.project_gemini.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".Hushh_Home_Screen"
+            android:exported="false" />
+        <activity
+            android:name=".Confirm_Info"
+            android:exported="false" />
+        <activity
+            android:name=".Otp_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Register_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+    </application>
+
+</manifest>

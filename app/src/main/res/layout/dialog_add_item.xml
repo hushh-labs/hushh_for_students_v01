@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter quantity:"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editTextQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:padding="8dp"
+        android:hint="Enter quantity"
+        android:textSize="12sp" />
+
+</LinearLayout>

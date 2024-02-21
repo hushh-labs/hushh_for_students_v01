@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="8dp"
+    android:padding="8dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rectangular_outline_black"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/textserno"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="12dp"
+        android:textColor="#775AFF"
+        android:text="1"/>
+
+    <ImageView
+        android:id="@+id/imgwinnerprofilepic"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/user_hushh"
+        android:layout_marginLeft="12dp"/>
+
+    <TextView
+        android:id="@+id/textname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="12dp"
+        android:text="Ankit Kumar Singh"/>
+
+    <TextView
+        android:id="@+id/texttotalcoins"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#775AFF"
+        android:text="1280"/>
+
+</LinearLayout>

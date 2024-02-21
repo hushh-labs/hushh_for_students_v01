@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.jackandphantom.carouselrecyclerview.view.ReflectionImageView
+        android:id="@+id/imageViewCardLoader"
+        android:layout_width="320dp"
+        android:layout_height="502dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/flip_card" />
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
