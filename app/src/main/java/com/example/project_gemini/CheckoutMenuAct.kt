@@ -67,11 +67,11 @@ class CheckoutMenuAct : AppCompatActivity(), PaymentStatusListener {
         if (isLateNight) {
             if (amountWithoutDelivery < 50) {
                 amount = amountWithoutDelivery + 5
-                deliveryCharge = 1
+                deliveryCharge = 5
                 Toast.makeText(this, "Delivery fee of Rs 5 is added", Toast.LENGTH_SHORT).show()
             } else {
                 amount = amountWithoutDelivery + 10
-                deliveryCharge = 1
+                deliveryCharge = 10
                 Toast.makeText(this, "Delivery fee of Rs 10 is added", Toast.LENGTH_SHORT).show()
             }
         } else {
@@ -311,9 +311,9 @@ class CheckoutMenuAct : AppCompatActivity(), PaymentStatusListener {
 
         if (isLateNight) {
             deliveryCharge = if (amountWithoutDelivery < 50) {
-                1
+                5
             } else {
-                1
+                10
             }
         } else {
             deliveryCharge = 0

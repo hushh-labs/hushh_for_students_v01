@@ -90,9 +90,9 @@ class Hushh_Home_Screen : AppCompatActivity() {
 
 
 
-        textViewContact = findViewById(R.id.textViewContact)
+        textViewContact = findViewById(R.id.textView39)
         textCoinEarned = findViewById(R.id.textcoinearned)
-        lottieAnimationView = findViewById(R.id.surprise)
+        //lottieAnimationView = findViewById(R.id.surprise)
 
         if (isBiometricAuthAvailable()) {
             // Biometric authentication is available, proceed with authentication
@@ -141,8 +141,8 @@ class Hushh_Home_Screen : AppCompatActivity() {
             }
         }
 
-        card1 = findViewById(R.id.card)
-        card2 = findViewById(R.id.card2)
+        //card1 = findViewById(R.id.card)
+        //card2 = findViewById(R.id.card2)
 
         textViewCardName = findViewById(R.id.textView)
         textViewName = findViewById(R.id.textViewName)
@@ -152,7 +152,7 @@ class Hushh_Home_Screen : AppCompatActivity() {
         imageViewQR = findViewById(R.id.imageView9)
 
         // Inside the onCreate method of Hushh_Home_Screen activity
-        val imageView2: ImageView = findViewById(R.id.imageView2)
+      val imageView2: ImageView = findViewById(R.id.imageView39)
 
         imageView2.setOnClickListener {
             val intent = Intent(this, HushhCoinsEarnedAct::class.java)
@@ -163,13 +163,7 @@ class Hushh_Home_Screen : AppCompatActivity() {
         }
 
 
-        card1.setOnClickListener {
-            flipCard()
-        }
 
-        card2.setOnClickListener {
-            flipCard()
-        }
 
 
 
@@ -442,48 +436,48 @@ class Hushh_Home_Screen : AppCompatActivity() {
 
 
 
-    private fun flipCard() {
-        val visibleCard: View
-        val invisibleCard: View
+    /*private fun flipCard() {
+            val visibleCard: View
+            val invisibleCard: View
 
-        if (isCard1Visible) {
-            visibleCard = card1
-            invisibleCard = card2
+            if (isCard1Visible) {
+                visibleCard = card1
+                invisibleCard = card2
 
-            findViewById<View>(R.id.cardrecycler).visibility = View.GONE
-            findViewById<View>(R.id.labelbrandcard).visibility = View.GONE
+                findViewById<View>(R.id.cardrecycler).visibility = View.GONE
+                findViewById<View>(R.id.labelbrandcard).visibility = View.GONE
 
-        } else {
-            visibleCard = card2
-            invisibleCard = card1
+            } else {
+                visibleCard = card2
+                invisibleCard = card1
 
-            findViewById<View>(R.id.cardrecycler).visibility = View.VISIBLE
-            findViewById<View>(R.id.labelbrandcard).visibility = View.VISIBLE
-        }
-
-        val animatorOut = ObjectAnimator.ofFloat(visibleCard, "rotationY", 0f, 90f)
-        animatorOut.duration = 120
-        animatorOut.interpolator = AccelerateDecelerateInterpolator()
-
-        val animatorIn = ObjectAnimator.ofFloat(invisibleCard, "rotationY", -90f, 0f)
-        animatorIn.duration = 120
-        animatorIn.interpolator = AccelerateDecelerateInterpolator()
-
-        animatorOut.start()
-        animatorOut.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator) {}
-            override fun onAnimationEnd(animation: Animator) {
-                visibleCard.visibility = View.GONE
-                invisibleCard.visibility = View.VISIBLE
-                animatorIn.start()
+                findViewById<View>(R.id.cardrecycler).visibility = View.VISIBLE
+                findViewById<View>(R.id.labelbrandcard).visibility = View.VISIBLE
             }
 
-            override fun onAnimationCancel(animation: Animator) {}
-            override fun onAnimationRepeat(animation: Animator) {}
-        })
+            val animatorOut = ObjectAnimator.ofFloat(visibleCard, "rotationY", 0f, 90f)
+            animatorOut.duration = 120
+            animatorOut.interpolator = AccelerateDecelerateInterpolator()
 
-        isCard1Visible = !isCard1Visible
-    }
+            val animatorIn = ObjectAnimator.ofFloat(invisibleCard, "rotationY", -90f, 0f)
+            animatorIn.duration = 120
+            animatorIn.interpolator = AccelerateDecelerateInterpolator()
+
+            animatorOut.start()
+            animatorOut.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    visibleCard.visibility = View.GONE
+                    invisibleCard.visibility = View.VISIBLE
+                    animatorIn.start()
+                }
+
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            })
+
+            isCard1Visible = !isCard1Visible
+        }*/
 
     // Inside the retrieveAdditionalDataFromFirestore function
 
