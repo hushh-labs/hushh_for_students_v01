@@ -50,12 +50,12 @@
 
         <ImageView
             android:id="@+id/imageView5"
-            android:padding="6dp"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="92dp"
+            android:layout_height="92dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/rectangular_thick_outline_black"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rectangular_outline_black"
+            android:padding="6dp"
             app:layout_constraintStart_toStartOf="@+id/rectangle_1"
             app:layout_constraintTop_toBottomOf="@+id/rectangle_1"
             tools:srcCompat="@tools:sample/avatars" />
@@ -65,8 +65,13 @@
             android:layout_width="0dp"
             android:layout_height="30sp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:text="TextView"
-            android:textSize="22sp"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -87,8 +92,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="44sp"
-            android:layout_height="24sp"
+            android:layout_width="68sp"
+            android:layout_height="47sp"
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +106,12 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/fill_5"
                 android:contentDescription="Add"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/buttonText"
@@ -110,6 +120,7 @@
                 android:text="Add"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/button"
                 app:layout_constraintEnd_toEndOf="@+id/button"
                 app:layout_constraintStart_toStartOf="@+id/button"
@@ -123,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="About This Card"
-            android:textAppearance="@style/label"
+            android:textColor="#E34C65"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
@@ -136,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Preview"
-            android:textAppearance="@style/label"
+            android:textColor="#E34C65"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/textView15"

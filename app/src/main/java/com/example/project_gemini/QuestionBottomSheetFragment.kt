@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -29,7 +30,7 @@ class QuestionBottomSheetFragment(private val title: String, private val contact
         val view = inflater.inflate(R.layout.fragment_question_bottom_sheet, container, false)
         radioGroup = view.findViewById(R.id.radioGroup)
         questionTextView = view.findViewById(R.id.question)
-        val nextButton = view.findViewById<Button>(R.id.nextButton)
+        val nextButton = view.findViewById<ImageButton>(R.id.nextbutton)
         nextButton.setOnClickListener {
             onNextButtonClick()
         }

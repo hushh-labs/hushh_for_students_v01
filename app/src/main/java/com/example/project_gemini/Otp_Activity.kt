@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,7 @@ class Otp_Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp)
 
-        val imageView = findViewById<Button>(R.id.button_otp_validation)
+        val imageView = findViewById<ImageButton>(R.id.button_otp_validation)
 
         verificationId = intent.getStringExtra("verificationId")
         phoneNumber = intent.getStringExtra("phoneNumber")

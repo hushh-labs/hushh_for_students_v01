@@ -11,24 +11,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60.11dp"
+        android:layout_marginStart="12dp"
         android:text="Confirm your information"
         android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/we_ll_call_"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="20dp"
-        android:text="By entering information, I agree to Hushh's Terms
-of Service Non-discrimination policy and
-Payments Terms of Service and acknowledge the
-Privacy Policy."
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:text="@string/info_text"
         android:textColor="#717174"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,8 +38,8 @@ Privacy Policy."
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="@+id/we_ll_call_"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_up">
@@ -53,54 +51,73 @@ Privacy Policy."
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/FirstName"
+                android:id="@+id/EmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/rectangular_outline_black"
-                android:hint="First Name"
-                android:inputType="textPersonName" />
+                android:textSize="16dp"
+                android:background="@drawable/rectangular_outline_black_curved"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/LastName"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rectangular_outline_black"
-                android:hint="Last Name"
-                android:inputType="textPersonName" />
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_marginTop="32dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/FirstName"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="4dp"
+                    android:background="@drawable/rectangular_outline_black_curved"
+                    android:hint="First Name"
+                    android:textSize="16dp"
+                    android:inputType="textPersonName"
+                    />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/LastName"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/rectangular_outline_black_curved"
+                    android:textSize="16dp"
+                    android:hint="Last Name"
+                    android:inputType="textPersonName"
+                    />
+
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/PhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="32dp"
                 android:digits="0123456789"
                 android:maxLength="10"
-                android:background="@drawable/rectangular_outline_black"
+                android:textSize="16dp"
+                android:background="@drawable/rectangular_outline_black_curved"
                 android:hint="Phone Number"
                 android:inputType="phone" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/EmailAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rectangular_outline_black"
-                android:hint="Email Address"
-                android:inputType="textEmailAddress" />
+
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/Birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rectangular_outline_black"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/rectangular_outline_black_curved"
+                android:textSize="16dp"
                 android:hint="Birthday"
                 android:inputType="text"
                 android:drawableEnd="@drawable/baseline_calendar_month_24"
@@ -111,15 +128,16 @@ Privacy Policy."
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/we_ll_call_"
         app:layout_constraintStart_toStartOf="@+id/we_ll_call_"
-        app:layout_constraintTop_toBottomOf="@+id/we_ll_call_"
-        android:scaleType="centerCrop">
+        app:layout_constraintTop_toBottomOf="@+id/we_ll_call_">
 
         <ImageButton
             android:id="@+id/button4"
@@ -136,10 +154,11 @@ Privacy Policy."
             android:id="@+id/buttonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next"
+            android:text="Continue"
             android:layout_marginTop="4dp"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="16dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

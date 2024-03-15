@@ -322,75 +322,77 @@ class CheckoutMenuAct : AppCompatActivity(), PaymentStatusListener {
         // Add delivery charge to totalAmount
         val totalAmountWithDelivery = totalAmount + deliveryCharge
 
-
-
         val firestore = FirebaseFirestore.getInstance()
         val contact = intent.getStringExtra("contact")
 
-        // Format HushhDiscount
-        val hushhDiscount = "Rs ${discountedCost}.00 discount"
+        // Reference to the 'brandname' subcollection within the user document
+        val brandnameCollection = firestore.collection("users").document(contact.toString()).collection(brandname ?: "")
 
-        // Format UserPaid
-        val userPaid = String.format(Locale.getDefault(), "Rs %.2f - Rs %.2f = Rs %.2f", totalAmount.toFloat(), discountedCost.toFloat(), amount)
+        // Query to fetch all documents within the 'brandname' subcollection
+        brandnameCollection.get()
+            .addOnSuccessListener { brandnameSnapshot ->
+                val questionsAndAnswers = StringBuilder()
 
-        // Update 'users' collection
-        val usersCollection = firestore.collection("users").document(contact.toString())
-            .collection(brandname ?: "").document("${brandname}${timeStamp}")
+                // Iterate through each document within the 'brandname' subcollection
+                for (document in brandnameSnapshot.documents) {
+                    // Check if the document contains the required fields
+                    if (document.contains("question") && document.contains("answer") && document.contains("title")) {
+                        val question = document.getString("question") ?: ""
+                        val answer = document.getString("answer") ?: ""
+                        val title = document.getString("title") ?: ""
 
-        usersCollection.set(
-            mapOf(
-                "OrderId" to "${brandname}${timeStamp}",
-                "OrderTotal" to totalAmountWithDelivery,
-                "HushhDiscount" to hushhDiscount,
-                "BillUrl" to imageUrl,
-                "UserPaid" to userPaid,
-                "PaymentConfirmation" to "yes",
-                "Timestamp" to "${timeStamp}"
-            )
-        ).addOnSuccessListener {
-            Toast.makeText(this, "Data saved to 'users' collection successfully", Toast.LENGTH_SHORT).show()
-        }.addOnFailureListener { exception ->
-            Toast.makeText(this, "Failed to save data to 'users' collection", Toast.LENGTH_SHORT).show()
-        }
+                        // Append question and answer to the StringBuilder
+                        questionsAndAnswers.append("$title: $question\n")
+                        questionsAndAnswers.append("Answer: $answer\n\n") // Add a newline for clarity
+                    }
+                }
 
-        // Update 'buisness_onboard' collection
-        val businessOnboardCollection = firestore.collection("buisness_onboard")
-            .document(brandname ?: "").collection("invoice").document("${brandname}${timeStamp}")
+                // Update 'users' collection
+                val usersDocument = firestore.collection("users").document(contact.toString())
+                    .collection(brandname ?: "").document("${brandname}${timeStamp}")
 
-        businessOnboardCollection.set(
-            mapOf(
-                "OrderId" to "${brandname}${timeStamp}",
-                "OrderTotal" to totalAmountWithDelivery,
-                "HushhDiscount" to hushhDiscount,
-                "BillUrl" to imageUrl,
-                "UserPaid" to userPaid,
-                "UserPhone" to contact.toString(),
-                "PaymentConfirmation" to "yes",
-                "Timestamp" to "${timeStamp}"
-            )
-        ).addOnSuccessListener {
-            Toast.makeText(this, "Data saved to 'buisness_onboard' collection successfully", Toast.LENGTH_SHORT)
-                .show()
-            dismissLoadingDialog()
-                // Call openWhatsApp() with the specified phone number and message
-            //takessoflinearLayoutInvoice
-                val name = intent.getStringExtra("name")
-                openWhatsApp("+917276867747",
-                    "Order by:\n$name\n"+
-                            "OrderId: ${brandname}${timeStamp}\n" +
-                            "OrderTotal: $totalAmountWithDelivery\n" +
-                            "Discount: $hushhDiscount\n" +
-                            "BillUrl: $imageUrl\n" +
-                            "UserPaid: $userPaid\n" +
-                            "UserPhone: ${contact.toString()}\n" +
-                            "PaymentConfirmation: yes\n"
-                           )
+                usersDocument.set(
+                    mapOf(
+                        "OrderId" to "${brandname}${timeStamp}",
+                        "OrderTotal" to totalAmountWithDelivery,
+                        "HushhDiscount" to "Rs ${discountedCost}.00 discount",
+                        "BillUrl" to imageUrl,
+                        "UserPaid" to String.format(Locale.getDefault(), "Rs %.2f - Rs %.2f = Rs %.2f", totalAmount.toFloat(), discountedCost.toFloat(), amount),
+                        "PaymentConfirmation" to "yes",
+                        "Timestamp" to timeStamp,
+                        "QuestionsAndAnswers" to questionsAndAnswers.toString()
+                    )
+                ).addOnSuccessListener {
+                    Toast.makeText(this, "Data saved to 'users' collection successfully", Toast.LENGTH_SHORT).show()
 
-        }.addOnFailureListener { exception ->
-            Toast.makeText(this, "Failed to save data to 'buisness_onboard' collection", Toast.LENGTH_SHORT)
-                .show()
-        }
+                    // Call openWhatsApp() with the specified phone number and message
+                    val name = intent.getStringExtra("name")
+                    openWhatsApp("+917276867747",
+                        "Order by:\n$name\n" +
+                                "OrderId: ${brandname}${timeStamp}\n" +
+                                "OrderTotal: $totalAmountWithDelivery\n" +
+                                "Discount: Rs ${discountedCost}.00 discount\n" +
+                                "BillUrl: $imageUrl\n" +
+                                "UserPaid: ${String.format(Locale.getDefault(), "Rs %.2f - Rs %.2f = Rs %.2f", totalAmount.toFloat(), discountedCost.toFloat(), amount)}\n" +
+                                "UserPhone: ${contact.toString()}\n" +
+                                "PaymentConfirmation: yes\n" +
+                                "Preferences:\n\n$questionsAndAnswers"
+                    )
+
+                    progressDialog?.dismiss()
+                }.addOnFailureListener { exception ->
+                    Toast.makeText(this, "Failed to save data to 'users' collection", Toast.LENGTH_SHORT).show()
+                    progressDialog?.dismiss()
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Handle any errors
+                Toast.makeText(this, "Failed to fetch questions and answers", Toast.LENGTH_SHORT).show()
+                progressDialog?.dismiss()
+            }
     }
+
+
 
     private fun openWhatsApp(phoneNumber: String, message: String) {
         val intent = Intent(Intent.ACTION_VIEW)

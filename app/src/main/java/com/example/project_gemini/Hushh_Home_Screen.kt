@@ -152,14 +152,26 @@ class Hushh_Home_Screen : AppCompatActivity() {
         imageViewQR = findViewById(R.id.imageView9)
 
         // Inside the onCreate method of Hushh_Home_Screen activity
-      val imageView2: ImageView = findViewById(R.id.imageView39)
+        val imageView39: ImageView = findViewById(R.id.imageView39)
 
-        imageView2.setOnClickListener {
+        imageView39.setOnClickListener {
             val intent = Intent(this, HushhCoinsEarnedAct::class.java)
             intent.putExtra("COIN_EARNED", textCoinEarned.text.toString())
             intent.putExtra("CONTACT", textViewContact.text.toString())
             intent.putExtra("NAME", textViewName.text.toString())
             startActivity(intent)
+        }
+
+        val imageView45:ImageView = findViewById(R.id.imageView45)
+
+        imageView45.setOnClickListener {
+            showToast("You are already on the home screen")
+        }
+
+        val imageView46:ImageView = findViewById(R.id.imageView46)
+
+        imageView46.setOnClickListener {
+            showToast("We are implementing this feature")
         }
 
 
@@ -208,6 +220,7 @@ class Hushh_Home_Screen : AppCompatActivity() {
             set3DItem(true)
             setAlpha(true)
             setInfinite(true)
+            setIntervalRatio(0.56f)
         }
 
         fetchCardImagesFromFirebase(globalPhoneNumber)

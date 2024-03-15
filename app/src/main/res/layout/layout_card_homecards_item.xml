@@ -7,8 +7,8 @@
 
     <com.jackandphantom.carouselrecyclerview.view.ReflectionImageView
         android:id="@+id/imageViewCardLoader"
-        android:layout_width="320dp"
-        android:layout_height="502dp"
+        android:layout_width="340dp"
+        android:layout_height="602dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/flip_card" />

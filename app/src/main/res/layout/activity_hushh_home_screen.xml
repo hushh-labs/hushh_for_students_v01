@@ -10,7 +10,8 @@
     <ImageView
         android:id="@+id/imageView39"
         android:layout_width="430dp"
-        android:layout_height="248dp"
+        android:layout_height="210dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/hushhidcardbg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +21,7 @@
         android:id="@+id/imageView9"
         android:layout_width="82dp"
         android:layout_height="82dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="64dp"
         android:background="#fff"
         app:layout_constraintStart_toStartOf="@+id/imageView40"
         app:layout_constraintTop_toTopOf="parent"
@@ -114,20 +115,7 @@
         android:layout_marginTop="24dp"
         android:text="BRAND CARDS"
         android:textColor="#E34C65"
-        android:textStyle="bold"
-        android:textSize="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView39" />
-
-    <TextView
-        android:id="@+id/textView42"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="24dp"
-        android:text="BRAND CARDS"
-        android:textColor="#E34C65"
-        android:textSize="16dp"
+        android:textSize="12dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView39" />
@@ -136,11 +124,12 @@
         android:id="@+id/textView43"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:text="Slide for more >>"
         android:textColor="#515151"
-        android:textSize="16dp"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView41"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView41"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -156,8 +145,9 @@
 
     <ImageView
         android:id="@+id/imageView44"
-        android:layout_width="430dp"
-        android:layout_height="85dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
         android:elevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -200,7 +190,7 @@
     <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
         android:id="@+id/cardrecycler"
         android:layout_width="0dp"
-        android:layout_height="520dp"
+        android:layout_height="540dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

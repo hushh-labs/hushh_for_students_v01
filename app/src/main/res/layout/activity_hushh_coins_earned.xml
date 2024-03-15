@@ -1,273 +1,356 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HushhCoinsEarnedAct">
 
-    <ImageView
-        android:id="@+id/imageView22"
-        android:layout_width="match_parent"
-        android:layout_height="174dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/headercoinenagegement"
-        app:layout_constraintBottom_toTopOf="@+id/guideline14main" />
 
     <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:srcCompat="@drawable/user_hushh" />
+
+    <TextView
+        android:id="@+id/textView37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Profile"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView37"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView37"
+        app:srcCompat="@drawable/back_arrow_kushal" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:text="Hi Ankit,"
+        android:textColor="#767676"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.437" />
+
+    <TextView
+        android:id="@+id/textView44"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="1300.00"
+        android:textColor="#E34C65"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/textViewUserDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:shadowColor="@color/black"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:text="HUSHH COINS"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView44"
+        app:layout_constraintStart_toEndOf="@+id/textView44"
+        app:layout_constraintTop_toTopOf="@+id/textView44" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="121sp"
+        android:layout_height="98sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/imageView15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView44"
+        app:srcCompat="@drawable/earnmore" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="121dp"
+        android:layout_height="98dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+        app:layout_constraintEnd_toStartOf="@+id/imageView19"
+        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintTop_toTopOf="@+id/imageView11"
+        app:srcCompat="@drawable/dashboard" />
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="121dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageView15"
+        app:layout_constraintTop_toTopOf="@+id/imageView15"
+        app:srcCompat="@drawable/transfer" />
+
+    <View
+        android:id="@+id/profiledownline"
+        android:layout_width="0dp"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="16dp"
+        android:background="#EEE7E7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView15" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/sclviewprofile"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:src="@drawable/headercurvehussengage"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline12main" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/profiledownline" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cnlymain"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cnly1"
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/textView48"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:padding="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:shadowColor="#A0A4B0"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:text="YOUR PROFILE"
+                android:textColor="#A0A4B0"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/cnlymain">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:padding="6dp"
-                    android:src="@drawable/user_hushh"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="0dp"
-                    android:layout_height="30sp"
-                    android:layout_marginLeft="8dp"
-                    android:text="TextView"
-                    android:textColor="#fff"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView5" />
 
-                <TextView
-                    android:id="@+id/textView13"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:lineSpacingExtra="1sp"
-                    android:text="Welcome Back,"
-                    android:textColor="#fff"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline22"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView11" />
+            <View
+                android:id="@+id/profiledownline2"
+                android:layout_width="0dp"
+                android:layout_height="0.8dp"
+                android:layout_marginTop="16dp"
+                android:background="#EEE7E7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView57" />
 
-                <ImageView
-                    android:id="@+id/textViewBalance"
-                    android:layout_width="105dp"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="4dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/textbalance"
-                    app:layout_constraintStart_toStartOf="@+id/imageView5"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+            <TextView
+                android:id="@+id/textView58"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:shadowColor="#A0A4B0"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:text="LAST ACTIVITY"
+                android:textColor="#A0A4B0"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView57"
+                app:layout_constraintTop_toBottomOf="@+id/profiledownline2" />
+
+            <RelativeLayout
+                android:id="@+id/rleditinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView48"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView48">
 
                 <TextView
-                    android:id="@+id/textViewUserDetails"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="4dp"
-                    android:paddingTop="3dp"
-                    android:text="Welcome Back"
-                    android:textColor="#fff"
-                    android:textSize="22sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textViewBalance"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textViewBalance"
-                    app:layout_constraintTop_toTopOf="@+id/textViewBalance" />
-
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline22"
+                    android:id="@+id/textView49"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_begin="42dp" />
+                    android:text="edit info"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
+                <View
+                    android:id="@+id/underline"
+                    android:layout_width="54dp"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/textView49"
+                    android:background="@color/black" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/nestedScrollView"
+            <TextView
+                android:id="@+id/textView50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="First Name"
+                android:textColor="#515151"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView48"
+                app:layout_constraintTop_toBottomOf="@+id/textView48" />
+
+            <TextView
+                android:id="@+id/textView54"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16sp"
+                android:text="Email Address"
+                android:textColor="#515151"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView48"
+                app:layout_constraintTop_toBottomOf="@+id/textView52" />
+
+            <TextView
+                android:id="@+id/textView56"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Mobile"
+                android:textColor="#515151"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView54"
+                app:layout_constraintTop_toBottomOf="@+id/textView55" />
+
+            <TextView
+                android:id="@+id/textView51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Name"
+                android:textColor="#515151"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView50"
+                app:layout_constraintStart_toStartOf="@+id/textView53"
+                app:layout_constraintTop_toTopOf="@+id/textView50"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/textView52"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:fillViewport="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/cnly1"
-                app:layout_constraintHorizontal_bias="0.569"
-                app:layout_constraintStart_toStartOf="@+id/cnly1"
-                app:layout_constraintTop_toBottomOf="@id/cnly1">
+                android:layout_height="36dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rectangular_outline_grey_thick"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:textSize="16sp"
+                android:paddingRight="104dp"
+                android:paddingBottom="8dp"
+                android:text="Ankit"
+                app:layout_constraintEnd_toStartOf="@+id/textView53"
+                app:layout_constraintStart_toStartOf="@+id/textView50"
+                app:layout_constraintTop_toBottomOf="@+id/textView50" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/hussh_home"
+            <TextView
+                android:id="@+id/textView55"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rectangular_outline_grey_thick"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="104dp"
+                android:paddingBottom="8dp"
+                android:text="ankit@gmail.com"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView53"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textView54"
+                app:layout_constraintTop_toBottomOf="@+id/textView54" />
+
+            <TextView
+                android:id="@+id/textView57"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rectangular_outline_grey_thick"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="104dp"
+                android:paddingBottom="8dp"
+                android:text="+91 8004482372"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView55"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textView56"
+                app:layout_constraintTop_toBottomOf="@+id/textView56" />
+
+            <TextView
+                android:id="@+id/textView53"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_outline_grey_thick"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:textSize="16sp"
+                android:paddingRight="124dp"
+                android:paddingBottom="8dp"
+                android:text="Kumar"
+                app:layout_constraintBottom_toBottomOf="@+id/textView52"
+                app:layout_constraintEnd_toEndOf="@+id/rleditinfo"
+                app:layout_constraintTop_toTopOf="@+id/textView52" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/textView57"
+                app:layout_constraintStart_toStartOf="@+id/textView58"
+                app:layout_constraintTop_toBottomOf="@+id/textView58"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/hushhcoinhistory"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:overScrollMode="never"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/layout_history_item" />
 
 
-                    <ImageView
-                        android:id="@+id/imageView14"
-                        android:layout_width="485dp"
-                        android:layout_height="246dp"
-                        android:layout_marginTop="4dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/cardcredituserhushh"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-                        app:layout_constraintHorizontal_bias="0.579"
-                        app:layout_constraintStart_toStartOf="@id/guideline7"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_begin="16dp" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_end="16dp" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="109dp" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="153dp" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_begin="36dp" />
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="4dp"
-                        android:text="TextView"
-                        android:gravity="center_vertical"
-                        android:textSize="24sp"
-                        android:textColor="#80E6E1E1"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/guideline14"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-                        app:layout_constraintStart_toStartOf="@+id/guideline15"
-                        app:layout_constraintTop_toTopOf="@+id/guideline13" />
-
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="111dp"
-                        android:layout_height="74dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintEnd_toStartOf="@id/imageView15"
-                        app:layout_constraintStart_toStartOf="@+id/guideline7"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView14"
-                        app:srcCompat="@drawable/cardearnmore" />
-
-                    <ImageView
-                        android:id="@+id/imageView15"
-                        android:layout_width="111dp"
-                        android:layout_height="74dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
-                        app:layout_constraintEnd_toStartOf="@id/imageView19"
-                        app:layout_constraintStart_toEndOf="@+id/imageView11"
-                        app:layout_constraintTop_toTopOf="@+id/imageView11"
-                        app:srcCompat="@drawable/cardtransfer" />
-
-                    <ImageView
-                        android:id="@+id/imageView19"
-                        android:layout_width="111dp"
-                        android:layout_height="74dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView15"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-                        app:layout_constraintStart_toEndOf="@+id/imageView15"
-                        app:layout_constraintTop_toTopOf="@+id/imageView15"
-                        app:srcCompat="@drawable/cardmanage" />
-
-                    <TextView
-                        android:id="@+id/textViewAboveRecyclerView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Last Activity"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-                        app:layout_constraintStart_toStartOf="@+id/guideline15"
-                        app:layout_constraintTop_toBottomOf="@id/imageView19" />
-
-                    <!-- RecyclerView below the added TextView -->
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/hushhcoinhistory"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textViewAboveRecyclerView"
-                        tools:listitem="@layout/layout_history_item" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
 
-            </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline14main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="153dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline12main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="119dp" />
-
-
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

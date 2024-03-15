@@ -31,8 +31,8 @@ class HushhMenuAdapter(private val currentUserDocument: DocumentReference, priva
 
         fun bind(menuItem: HushhMenuItem) {
             binding.textView2.text = menuItem.itemName
-            binding.textView3.text = "Original Price: Rs ${menuItem.itemPrice}"
-            binding.textView5.text = "Current Stock: ${menuItem.itemStock} items"
+            binding.textView3.text = "Original Price - Rs ${menuItem.itemPrice}"
+            binding.textView5.text = "Current Stock - ${menuItem.itemStock} items"
 
             binding.button.setOnClickListener {
                 val currentStock = menuItem.itemStock.toInt()

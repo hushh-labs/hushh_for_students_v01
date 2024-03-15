@@ -6,83 +6,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#fff"
+    android:background="#fff"
     tools:context=".NewCardMarketAct">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FAF8F8">
+        android:backgroundTint="#fff"
+        android:background="#fff">
 
         <TextView
-            android:id="@+id/sign_up"
+            android:id="@+id/textView37"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:text="Card Market"
-            android:textColor="#000000"
-            android:gravity="center_horizontal"
-            android:textSize="32sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <View
-            android:id="@+id/rectangle_1"
-            android:layout_width="39.37dp"
-            android:layout_height="39.37dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/rectangle_1"
-            app:layout_constraintBottom_toBottomOf="@+id/sign_up"
-            app:layout_constraintStart_toStartOf="@+id/input"
-            app:layout_constraintTop_toTopOf="@+id/sign_up" />
-
         <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="6dp"
-            app:layout_constraintBottom_toBottomOf="@+id/rectangle_1"
-            app:layout_constraintEnd_toEndOf="@+id/rectangle_1"
-            app:layout_constraintStart_toStartOf="@+id/rectangle_1"
-            app:layout_constraintTop_toTopOf="@+id/rectangle_1"
-            app:srcCompat="@drawable/back_arrow" />
+            android:id="@+id/imageView4"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView37"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView37"
+            app:srcCompat="@drawable/back_arrow_kushal" />
+
 
         <com.denzcoskun.imageslider.ImageSlider
-
             android:id="@+id/image_slider"
             android:layout_width="0dp"
             android:layout_height="240dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:animateLayoutChanges="true"
             app:iss_auto_cycle="true"
             app:iss_delay="0"
             app:iss_period="2000"
-            android:animateLayoutChanges="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerViewHorizontal"
             tools:ignore="NotSibling" />
 
-
-        <RelativeLayout
-            android:id="@+id/input"
-            android:layout_width="0dp"
-            android:layout_height="40.08dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/input"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_up" />
 
         <!-- Your existing layout -->
 
@@ -90,6 +60,7 @@
             android:id="@+id/recyclerViewHorizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,11 +72,14 @@
             android:id="@+id/label1"
             android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:lineSpacingExtra="1sp"
-            android:text="Luxury brand cards"
-            android:textAppearance="@style/label"
-            android:textColor="#979797"
+            android:shadowColor="#A0A4B0"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.5"
+            android:text="LUXURY BRAND CARD"
+            android:textColor="#A0A4B0"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/label"
@@ -116,6 +90,7 @@
             android:id="@+id/horizontalGridView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -127,11 +102,14 @@
             android:id="@+id/label2"
             android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:lineSpacingExtra="1sp"
-            android:text="Insurance Card"
-            android:textAppearance="@style/label"
-            android:textColor="#979797"
+            android:text="INSURANCE CARD"
+            android:shadowColor="#A0A4B0"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.5"
+            android:textColor="#A0A4B0"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/label"
@@ -142,6 +120,7 @@
             android:id="@+id/horizontalGridView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -153,11 +132,14 @@
             android:id="@+id/label3"
             android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:lineSpacingExtra="1sp"
-            android:text="Culinary Card"
-            android:textAppearance="@style/label"
-            android:textColor="#979797"
+            android:text="CULINARY CARD"
+            android:shadowColor="#A0A4B0"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.5"
+            android:textColor="#A0A4B0"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/label"
@@ -173,17 +155,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label3"
             app:spanCount="3"
+            android:layout_marginTop="16dp"
             tools:listitem="@layout/layout_card_brand_item" />
 
         <TextView
             android:id="@+id/label4"
             android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:lineSpacingExtra="1sp"
-            android:text="Travel Card"
-            android:textAppearance="@style/label"
-            android:textColor="#979797"
+            android:text="TRAVEL CARD"
+            android:shadowColor="#A0A4B0"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.5"
+            android:textColor="#A0A4B0"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/label"
@@ -199,17 +185,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label4"
             app:spanCount="3"
+            android:layout_marginTop="16dp"
             tools:listitem="@layout/layout_card_brand_item" />
 
         <TextView
             android:id="@+id/label5"
             android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:lineSpacingExtra="1sp"
-            android:text="Shopping Card"
-            android:textAppearance="@style/label"
-            android:textColor="#979797"
+            android:text="SHOPPING CARD"
+            android:shadowColor="#A0A4B0"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.5"
+            android:textColor="#A0A4B0"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/label"
@@ -225,17 +215,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label5"
             app:spanCount="3"
+            android:layout_marginTop="16dp"
             tools:listitem="@layout/layout_card_brand_item" />
 
         <TextView
             android:id="@+id/label6"
             android:layout_width="0dp"
             android:layout_height="22dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:lineSpacingExtra="1sp"
-            android:text="Hotels Card"
-            android:textAppearance="@style/label"
-            android:textColor="#979797"
+            android:text="HOTELS CARD"
+            android:shadowColor="#A0A4B0"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.5"
+            android:textColor="#A0A4B0"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/label"
@@ -251,68 +245,71 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label6"
             app:spanCount="3"
+            android:layout_marginTop="16dp"
             tools:listitem="@layout/layout_card_brand_item" />
-
-
 
 
         <TextView
             android:id="@+id/label"
             android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:lineSpacingExtra="1sp"
-            android:text="General Preference Card"
-            android:textAppearance="@style/label"
-            android:textColor="#979797"
+            android:shadowColor="#A0A4B0"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.5"
+            android:text="GENERAL PREFERENCE CARD"
+            android:textColor="#A0A4B0"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/input"
-            app:layout_constraintStart_toStartOf="@+id/input"
-            app:layout_constraintTop_toBottomOf="@+id/input" />
+            app:layout_constraintStart_toStartOf="@+id/imageView6"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+        <RelativeLayout
+            android:id="@+id/imageView6"
+            android:layout_width="0dp"
+            android:layout_height="57dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rectangular_outline_grey_thick"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
         <ImageView
             android:id="@+id/imageView10"
             android:layout_width="40dp"
             android:layout_height="0dp"
             android:layout_margin="6dp"
-            app:layout_constraintBottom_toBottomOf="@+id/input"
-            app:layout_constraintStart_toStartOf="@+id/input"
-            app:layout_constraintTop_toTopOf="@+id/input"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+            app:layout_constraintStart_toStartOf="@+id/imageView6"
+            app:layout_constraintTop_toTopOf="@+id/imageView6"
             app:srcCompat="@drawable/icon" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout2"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="2dp"
-            app:layout_constraintBottom_toBottomOf="@+id/input"
-            app:layout_constraintEnd_toEndOf="@+id/input"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+            app:layout_constraintEnd_toEndOf="@+id/imageView6"
             app:layout_constraintStart_toEndOf="@+id/imageView10"
-            app:layout_constraintTop_toTopOf="@+id/input">
+            app:layout_constraintTop_toTopOf="@+id/imageView10">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_for_a_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:boxBackgroundMode="none"
-                android:layout_gravity="center_vertical">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/search_for_a_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="4dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical"
-                    android:hint="Search for a card"
-                    android:inputType="text"
-                    android:textSize="14sp"
-                    android:textColor="#00989393"
-                    android:background="@android:color/transparent" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:inputType="text"
+                android:hint="Search for a card"
+                android:padding="8dp"
+                android:textColor="#000"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
 

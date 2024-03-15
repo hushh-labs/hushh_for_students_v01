@@ -12,8 +12,8 @@ android {
         applicationId = "com.example.project_gemini"
         minSdk = 24
         targetSdk = 34
-        versionCode = 6
-        versionName = "1.6"
+        versionCode = 21
+        versionName = "1.21"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

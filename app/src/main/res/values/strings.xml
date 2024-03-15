@@ -4,6 +4,9 @@
     <string name="logo_text">ID Card</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="disclaimer_text">By signing up, you agree to the <font color="#E34C65">Terms of Services</font> and <font color="#E34C65">Privacy Policy</font>, including Cookies use.</string>
+    <string name="info_text">By entering information, I agree to Hushh\'s <font color="#E34C65">Terms of Service</font> , <font color="#E34C65"> Non-discrimination policy</font> and <font color="#E34C65">Payments Terms of Service</font> and acknowledge the <font color="#E34C65">Privacy Policy</font>. </string>
+    <string name="resend_text">Didn\'t receive code? <font color="#E34C65"> Request again </font> </string>
 
 
 </resources>

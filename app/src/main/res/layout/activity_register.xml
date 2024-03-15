@@ -16,7 +16,7 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:text="Sign up"
-        android:textSize="35sp" />
+        android:textSize="24dp" />
 
     <!-- Enter your mobile number text -->
     <TextView
@@ -25,8 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/titleTextView"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="14dp"
         android:layout_marginTop="40dp"
         android:text="Enter your mobile number"
         android:textColor="@color/black"
@@ -35,11 +34,11 @@
     <LinearLayout
         android:id="@+id/linearLayout01"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="56dp"
         android:layout_below="@id/mobileNumberTextView"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
@@ -49,23 +48,25 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
+            android:layout_weight="1"
             android:text="+91"
             android:textSize="16dp"
             android:padding="4dp"
-            android:background="@drawable/box_outline" />
+            android:background="@drawable/rectangular_outline_black_curved" />
 
 
         <EditText
             android:id="@+id/phoneNumberEditText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="14"
             android:padding="4dp"
-            android:background="@drawable/box_outline"
+            android:background="@drawable/rectangular_outline_black_curved"
             android:hint="Phone Number"
             android:digits="0123456789"
             android:maxLength="10"
+            android:textSize="16dp"
             android:inputType="phone" />
 
     </LinearLayout>
@@ -74,12 +75,9 @@
         android:id="@+id/disclaimerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="14dp"
         android:layout_below="@id/linearLayout01"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="14dp"
         android:layout_marginBottom="20dp"
         android:text="We’ll call or text to confirm your number. Standard message and data rates apply."
         android:textColor="#808080"
@@ -88,10 +86,11 @@
     <RelativeLayout
         android:id="@+id/nextbutton2"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/disclaimerTextView"
-        android:layout_margin="20dp">
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp">
 
         <ImageButton
             android:id="@+id/cardButton"
@@ -107,9 +106,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Next"
+            android:text="Continue"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -117,7 +117,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nextbutton2"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
         <!-- Country code prefix spinner -->
@@ -127,11 +130,15 @@
             android:layout_gravity="center"
             android:layout_marginRight="5dp"
             android:background="#CCCCCC" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="or"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:textSize="16dp"
+            android:text="or" />
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
@@ -145,21 +152,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/option2Layout1"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_rowWeight="1"
         android:layout_columnWeight="1"
         android:layout_below="@+id/nextbutton2"
         android:layout_gravity="fill"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="14dp"
         android:onClick="onOptionClick">
 
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/box_outline"
+            android:layout_height="60dp"
+            android:background="@drawable/rectangular_outline_black_curved"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -182,7 +189,7 @@
             android:gravity="center"
             android:text="Continue with Google"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginLeft="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -191,56 +198,68 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/option2Layout2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_rowWeight="1"
-        android:layout_columnWeight="1"
-        android:layout_below="@+id/option2Layout1"
-        android:layout_gravity="fill"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:onClick="onOptionClick">
+    <TextView
+        android:id="@+id/disclaimerTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/disclaimer_text"
+        android:textColor="#808080"
+        android:textSize="12sp"
+        android:layout_alignParentBottom="true"/>
 
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/box_outline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/apple"
-            android:layout_marginLeft="40dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
-            app:layout_constraintEnd_toStartOf="@+id/option212"
-            app:layout_constraintStart_toStartOf="@+id/imageButton2"
-            app:layout_constraintTop_toTopOf="@+id/imageButton2" />
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:id="@+id/option2Layout2"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_rowWeight="1"-->
+    <!--        android:layout_columnWeight="1"-->
+    <!--        android:layout_below="@+id/option2Layout1"-->
+    <!--        android:layout_gravity="fill"-->
+    <!--        android:layout_marginStart="20dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:onClick="onOptionClick">-->
 
-        <TextView
-            android:id="@+id/option212"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_toEndOf="@+id/imageView1"
-            android:gravity="center"
-            android:text="Continue with Apple"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_marginLeft="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageButton2"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!--        <ImageButton-->
+    <!--            android:id="@+id/imageButton2"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:background="@drawable/box_outline"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+    <!--        <ImageView-->
+    <!--            android:id="@+id/imageView1"-->
+    <!--            android:layout_width="30dp"-->
+    <!--            android:layout_height="30dp"-->
+    <!--            android:src="@drawable/apple"-->
+    <!--            android:layout_marginLeft="40dp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="@+id/imageButton2"-->
+    <!--            app:layout_constraintEnd_toStartOf="@+id/option212"-->
+    <!--            app:layout_constraintStart_toStartOf="@+id/imageButton2"-->
+    <!--            app:layout_constraintTop_toTopOf="@+id/imageButton2" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/option212"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="30dp"-->
+    <!--            android:layout_toEndOf="@+id/imageView1"-->
+    <!--            android:gravity="center"-->
+    <!--            android:text="Continue with Apple"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:textSize="20sp"-->
+    <!--            android:layout_marginLeft="40dp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="@+id/imageButton2"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
 

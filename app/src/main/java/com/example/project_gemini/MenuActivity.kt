@@ -34,7 +34,7 @@ class MenuActivity : AppCompatActivity() {
         CardName = intent.getStringExtra("parentName").toString() // Save CardName
         val name = intent.getStringExtra("name")
 
-        binding.textView11.text = name
+        binding.textView11.text = "Hi,$name"
 
         currentUserDocument = firestore.collection("users").document(contact.toString())
 
@@ -71,7 +71,7 @@ class MenuActivity : AppCompatActivity() {
         currentUserDocument.addSnapshotListener { documentSnapshot, _ ->
             val currentTotalCoins = documentSnapshot?.getLong("CurrentTotalCoins")
             currentTotalCoins?.let {
-                binding.textViewUserDetails.text = "$it hushh coins"
+                binding.textViewUserDetails.text = "$it "
             }
         }
 
@@ -125,12 +125,12 @@ class MenuActivity : AppCompatActivity() {
             }
 
             // Set the total order volume to the TextView
-            binding.textView33.text = "Total Order Volume: Rs $totalOrderVolume"
+            binding.textView33.text = "Total Price: Rs $totalOrderVolume"
 
             // Calculate discounted cost
             //val discountedCost = (totalOrderVolume.toDouble() * 0.1).coerceAtMost(50.0).toInt()
             val discountedCost = 0
-            binding.textView34.text = "Whoo!! You got Discount worth Rs $discountedCost"
+            binding.textView34.text = "Hushh Discount: Rs $discountedCost"
 
             binding.button2.setOnClickListener {
                 val coins = binding.textViewUserDetails.text.toString().split(" ")[0].toIntOrNull()

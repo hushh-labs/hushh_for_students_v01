@@ -24,7 +24,7 @@ class NewCardMarketAct : AppCompatActivity() {
 
         val contactNumber = intent.getStringExtra("CONTACT_NUMBER")
 
-        binding.imageView8.setOnClickListener {
+        binding.imageView4.setOnClickListener {
             val intent = Intent(this, Hushh_Home_Screen::class.java)
             startActivity(intent)
         }

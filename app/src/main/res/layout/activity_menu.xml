@@ -6,23 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MenuActivity">
 
-    <ImageView
-        android:id="@+id/imageView22"
-        android:layout_width="match_parent"
-        android:layout_height="174dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/headercoinenagegement"
-        app:layout_constraintBottom_toTopOf="@+id/guideline14main" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:src="@drawable/headercurvehussengage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline12main" />
-
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cnlymain"
@@ -33,9 +16,7 @@
             android:id="@+id/cnly1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
             android:padding="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +24,9 @@
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
                 android:padding="6dp"
                 android:src="@drawable/user_hushh"
                 app:layout_constraintStart_toStartOf="parent"
@@ -52,54 +34,28 @@
 
             <TextView
                 android:id="@+id/textView11"
-                android:layout_width="0dp"
-                android:layout_height="30sp"
-                android:layout_marginLeft="8dp"
-                android:text="TextView"
-                android:textColor="#fff"
-                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:text="Hi Ankit,"
+                android:textColor="#767676"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView5" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:lineSpacingExtra="1sp"
-                android:text="Welcome Back,"
-                android:textColor="#fff"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline22"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView11" />
-
-            <ImageView
-                android:id="@+id/textViewBalance"
-                android:layout_width="105dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="4dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/textbalance"
-                app:layout_constraintStart_toStartOf="@+id/imageView5"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
             <TextView
                 android:id="@+id/textViewUserDetails"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="4dp"
-                android:paddingTop="3dp"
-                android:text="Welcome Back"
-                android:textColor="#fff"
-                android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewBalance"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textViewBalance"
-                app:layout_constraintTop_toTopOf="@+id/textViewBalance" />
+                android:text="1300.00"
+                android:textColor="#E34C65"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -109,20 +65,36 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="42dp" />
 
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:text="HUSHH COINS"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewUserDetails"
+                app:layout_constraintStart_toEndOf="@+id/textViewUserDetails"
+                app:layout_constraintTop_toTopOf="@+id/textViewUserDetails" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
             android:id="@+id/imageView6"
             android:layout_width="0dp"
-            android:layout_height="40.08dp"
+            android:layout_height="57dp"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/input"
-            app:layout_constraintEnd_toEndOf="@+id/textView32"
-            app:layout_constraintStart_toStartOf="@+id/textView32"
-            app:layout_constraintTop_toBottomOf="@+id/textView32" />
-
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rectangular_outline_grey_thick"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cnly1" />
 
         <ImageView
             android:id="@+id/imageView10"
@@ -152,39 +124,29 @@
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical"
                 android:inputType="text"
-                android:padding="4dp"
+                android:hint="Search for a food"
+                android:padding="8dp"
                 android:textColor="#000"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewmenu"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline26"
             app:layout_constraintEnd_toEndOf="@+id/imageView6"
             app:layout_constraintStart_toStartOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6"
             tools:listitem="@layout/layout_menu_item" />
-
-        <TextView
-            android:id="@+id/textView32"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Order Now"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/cnly1"
-            app:layout_constraintStart_toStartOf="@+id/cnly1"
-            app:layout_constraintTop_toBottomOf="@+id/cnly1" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline26"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="60dp" />
+            app:layout_constraintGuide_end="86dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -205,7 +167,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardbtm"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="90dp"
         android:elevation="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/cnlymain"
         app:layout_constraintEnd_toEndOf="parent"
@@ -221,8 +183,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Total Order Volume : Rs 420"
+                android:layout_marginTop="16dp"
+                android:text="Total Price: Rs 420"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/button2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -232,21 +195,59 @@
                 android:id="@+id/textView34"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Whoo!! You got Discount worth Rs 40 "
-                android:textSize="12sp"
+                android:layout_marginTop="8dp"
+                android:text="Hushh Discount: Rs 40 "
+                android:textColor="#E34C65"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/button2"
                 app:layout_constraintStart_toStartOf="@+id/textView33"
                 app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="Checkout"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
+                android:layout_width="128sp"
+                android:layout_height="60sp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView34"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView33" />
+                app:layout_constraintTop_toTopOf="@+id/textView33">
+
+                <ImageButton
+                    android:id="@+id/button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/fill_5"
+                    android:contentDescription="Add"
+                    android:textAllCaps="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/buttonText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Cart"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/imageView14"
+                    app:layout_constraintBottom_toBottomOf="@+id/button2"
+                    app:layout_constraintEnd_toEndOf="@+id/button2"
+                    app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                <ImageView
+                    android:id="@+id/imageView14"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/basket"
+                    app:layout_constraintBottom_toBottomOf="@+id/buttonText"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/buttonText" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
