@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3B16A7"
+    android:background="#E34C65"
     tools:context=".CheckoutMenuAct">
-
-
 
 
   <ImageView
       android:id="@+id/imageView28"
-      android:layout_width="385dp"
-      android:layout_height="550dp"
+      android:layout_width="match_parent"
+      android:layout_height="580dp"
+      android:layout_marginStart="16dp"
       android:layout_marginTop="32dp"
+      android:layout_marginEnd="16dp"
+      android:scaleType="centerCrop"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.384"
       app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +55,7 @@
           android:id="@+id/textView21"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
           android:text="hushh dicount"
           android:textSize="14sp"
           android:textStyle="bold"
@@ -142,6 +144,7 @@
           android:id="@+id/view1"
           android:layout_width="0dp"
           android:layout_height="1dp"
+          android:layout_marginTop="8dp"
           android:layout_marginEnd="8dp"
           android:background="@color/black"
           app:layout_constraintEnd_toEndOf="parent"
@@ -181,6 +184,7 @@
           android:id="@+id/textView35"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
           android:text="Delivery Charges"
           android:textStyle="bold"
           app:layout_constraintStart_toStartOf="@+id/textView21"
@@ -192,15 +196,113 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="4dp"
           android:text="TextView"
+          app:layout_constraintBottom_toBottomOf="@+id/textView35"
           app:layout_constraintEnd_toEndOf="@+id/textView22"
+          app:layout_constraintHorizontal_bias="0.0"
           app:layout_constraintStart_toEndOf="@+id/textView35"
-          app:layout_constraintTop_toBottomOf="@+id/textView22" />
+          app:layout_constraintTop_toTopOf="@+id/textView35" />
+
+      <TextView
+          android:id="@+id/textView42"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text=" "
+          app:layout_constraintEnd_toEndOf="@+id/textView22"
+          app:layout_constraintHorizontal_bias="1.0"
+          app:layout_constraintStart_toStartOf="@+id/textView36"
+          app:layout_constraintTop_toTopOf="@+id/textView37" />
+
+      <TextView
+          android:id="@+id/textView37"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
+          android:text="Payment Log"
+          android:textStyle="bold"
+          app:layout_constraintStart_toStartOf="@+id/textView21"
+          app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
   </LinearLayout>
+
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/constraintLayout3"
+      android:layout_width="87sp"
+      android:layout_height="37sp"
+      android:layout_marginStart="16dp"
+      android:layout_marginBottom="24dp"
+      app:layout_constraintEnd_toStartOf="@id/constraintLayout4"
+      app:layout_constraintBottom_toBottomOf="@+id/imageView28"
+      app:layout_constraintStart_toStartOf="@+id/imageView28">
+
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@drawable/fill_5"
+        android:contentDescription="Add"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/buttonText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear Cart"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintStart_toStartOf="@+id/button"
+        app:layout_constraintTop_toTopOf="@+id/button" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/constraintLayout4"
+      android:layout_width="247sp"
+      android:layout_height="37sp"
+      android:layout_marginStart="4dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginBottom="24dp"
+      app:layout_constraintBottom_toBottomOf="@+id/imageView28"
+      app:layout_constraintEnd_toEndOf="@+id/imageView28"
+      app:layout_constraintStart_toEndOf="@+id/constraintLayout3">
+
+    <ImageButton
+        android:id="@+id/button11"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@drawable/fill_5"
+        android:contentDescription="Add"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/buttonText11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Initiate WhatsApp business message"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/button11"
+        app:layout_constraintEnd_toEndOf="@+id/button11"
+        app:layout_constraintStart_toStartOf="@+id/button11"
+        app:layout_constraintTop_toTopOf="@+id/button11" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 
   <TextView
@@ -211,53 +313,23 @@
       android:text="Payment Request"
       android:textSize="18sp"
       android:textStyle="bold"
-      app:layout_constraintEnd_toEndOf="@+id/imageView37"
-      app:layout_constraintStart_toStartOf="@+id/imageView37"
-      app:layout_constraintTop_toBottomOf="@+id/imageView37" />
+      app:layout_constraintEnd_toEndOf="@+id/imageView28"
+      app:layout_constraintStart_toStartOf="@+id/imageView28"
+      app:layout_constraintTop_toTopOf="@+id/imageView28" />
 
-  <ImageView
-      android:id="@+id/imageView30"
-      android:layout_width="308dp"
-      android:layout_height="52dp"
-      android:layout_marginBottom="16dp"
-      android:clickable="true"
-      app:layout_constraintBottom_toBottomOf="@+id/imageView28"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:srcCompat="@drawable/btnpdf" />
+
 
   <ImageView
       android:id="@+id/imageView31"
-      android:layout_width="345dp"
+      android:layout_width="0dp"
       android:layout_height="48dp"
       android:layout_marginTop="24dp"
       android:elevation="4dp"
+      android:scaleType="centerCrop"
       app:layout_constraintEnd_toEndOf="@+id/imageView28"
       app:layout_constraintStart_toStartOf="@+id/imageView28"
       app:layout_constraintTop_toBottomOf="@+id/imageView28"
       app:srcCompat="@drawable/paydonebtn" />
-
-  <ImageView
-      android:id="@+id/declinebtn"
-      android:layout_width="345dp"
-      android:layout_height="48dp"
-      android:layout_marginTop="12dp"
-      android:src="@drawable/decbtn"
-      app:layout_constraintEnd_toEndOf="@+id/imageView31"
-      app:layout_constraintHorizontal_bias="0.0"
-      android:elevation="4dp"
-      app:layout_constraintStart_toStartOf="@+id/imageView31"
-      app:layout_constraintTop_toBottomOf="@+id/imageView31" />
-
-  <ImageView
-      android:id="@+id/imageView37"
-      android:layout_width="44dp"
-      android:layout_height="44dp"
-      android:layout_marginTop="16dp"
-      android:src="@drawable/success"
-      app:layout_constraintEnd_toEndOf="@+id/imageView28"
-      app:layout_constraintStart_toStartOf="@+id/imageView28"
-      app:layout_constraintTop_toTopOf="@+id/imageView28" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

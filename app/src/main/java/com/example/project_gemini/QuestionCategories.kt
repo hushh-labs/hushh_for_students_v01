@@ -81,29 +81,24 @@ object QuestionCategories {
 
     val CULINARY = QuestionCategory(
         arrayOf(
-            "Which culinary experiences interest you? (Select all that apply)",
-            "What factors influence your choice of dining places? (Select all that apply)",
-            "What specific food preferences are most important to you? (Select all that apply)",
-            "What type of leisure activities do you enjoy after work? (Select all that apply)",
-            "Set a budget range for your dining and leisure expenses. (Select one)"
+            "Select your preferred spice and flavor profiles for meals.",
+            "Choose your preferred types of flour and protein sources for meals.",
+            "Indicate your preferences for sauces and sweetness levels in meals.",
+            "Select your preferred beverage temperature.",
+            "Choose your preferred fat sources in meals."
         ),
         { questionIndex ->
             when (questionIndex) {
-                0 -> arrayOf("Fine Dining", "Street Food", "Home Cooking", "Cuisine Exploration", "Desserts and Sweets")
-                1 -> arrayOf("Ambiance", "Service Quality", "Menu Variety", "Location", "Price")
-                2 -> arrayOf("Vegetarian", "Vegan", "Gluten-Free", "Organic", "Locally Sourced")
-                3 -> arrayOf("Reading", "Gaming", "Outdoor Activities", "Movies/TV", "Traveling")
-                4 -> arrayOf(
-                    "Less than $50 per month",
-                    "$50 - $100 per month",
-                    "$100 - $200 per month",
-                    "$200 - $300 per month",
-                    "More than $300 per month"
-                )
+                0 -> arrayOf("Mild spice", "No spice", "Like ginger", "Like garlic", "Neutral on both ginger and garlic")
+                1 -> arrayOf("Aata (whole wheat flour)", "Maida (all-purpose flour)", "Prefer tofu", "Prefer paneer (cow milk)", "Neutral/no preference")
+                2 -> arrayOf("Red tomato sauce only", "No chili sauce", "Very sweet", "Moderate sweetness", "No preference")
+                3 -> arrayOf("Very cold (with ice)", "Room temperature", "No preference")
+                4 -> arrayOf("Love generous amounts of ghee/butter", "Prefer moderate amounts of ghee/butter", "Neutral on ghee/butter", "Prefer minimal or no ghee/butter", "No preference")
                 else -> arrayOf()
             }
         }
     )
+
 
     val TRAVEL = QuestionCategory(
         arrayOf(

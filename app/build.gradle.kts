@@ -12,8 +12,8 @@ android {
         applicationId = "com.example.project_gemini"
         minSdk = 24
         targetSdk = 34
-        versionCode = 21
-        versionName = "1.21"
+        versionCode = 23
+        versionName = "1.23"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,6 +57,7 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-database:8.0.2")
     implementation("com.github.sparrow007:carouselrecyclerview:1.2.6")
     implementation("com.google.android.gms:play-services-drive:17.0.0")
+    implementation("com.google.firebase:firebase-analytics:21.6.1")
 
 
 
@@ -91,7 +92,9 @@ dependencies {
     implementation("dev.shreyaspatil.EasyUpiPayment:EasyUpiPayment:3.0.3")
 
 
+    implementation("com.github.1902shubh:SendMail:1.0.0")
 
+    implementation("com.razorpay:checkout:1.6.33")
 
 
 }

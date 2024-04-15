@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.hardware.biometrics.BiometricPrompt
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
@@ -33,7 +34,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
@@ -85,7 +88,36 @@ class Hushh_Home_Screen : AppCompatActivity() {
 
 
 
+
+
+
         setContentView(R.layout.activity_hushh_home_screen)
+
+        // Get the version code of the installed app
+        val packageInfo = packageManager.getPackageInfo(packageName, 0)
+        val installedVersionCode = packageInfo.versionCode.toString()
+
+        // Listen for changes in the version_update/versionCodehfs document
+        val versionUpdateRef = firestore.collection("version_update ").document("versionCodehfs")
+        versionUpdateRef.addSnapshotListener { snapshot: DocumentSnapshot?, error: FirebaseFirestoreException? ->
+            if (error != null) {
+                // Handle error
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                // Retrieve the version code from the document
+                val firestoreVersionCode = snapshot.getString("versionCode") ?: ""
+
+                // Compare the version codes
+                if (firestoreVersionCode != installedVersionCode) {
+                    // If version codes are different, retrieve the update link
+                    retrieveUpdateLink()
+                } else {
+                    // Versions are the same, do nothing
+                }
+            }
+        }
 
 
 
@@ -226,6 +258,48 @@ class Hushh_Home_Screen : AppCompatActivity() {
         fetchCardImagesFromFirebase(globalPhoneNumber)
 
     }
+
+    private fun retrieveUpdateLink() {
+        // Retrieve the update link from the version_update/apkupdatedlink document
+        val updateLinkRef = firestore.collection("version_update ").document("apkupdatedlink")
+        updateLinkRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    // Retrieve the link field from the document
+                    val updateLink = documentSnapshot.getString("link")
+
+                    // Open the update link
+                    openUpdateLink(updateLink)
+                } else {
+                    // Document does not exist or is empty, handle accordingly
+                }
+            }
+            .addOnFailureListener { e ->
+                // Handle failure to retrieve the update link
+                showToast("Failed to retrieve update link: ${e.message}")
+            }
+    }
+
+    private fun openUpdateLink(link: String?) {
+        link?.let {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+            startActivity(intent)
+            // Close the app
+            finish()
+        } ?: showToast("Update link is empty.")
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_UPDATE_APP) {
+            if (resultCode == RESULT_CANCELED) {
+                // User canceled the intent, close the app
+                finish()
+            }
+        }
+    }
+
 
     private fun createHushhCoinsDocument(phoneNumber: String) {
         val firestore = FirebaseFirestore.getInstance()
@@ -595,4 +669,8 @@ class Hushh_Home_Screen : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+    companion object {
+        private const val REQUEST_CODE_UPDATE_APP = 1001
+    }
+
 }

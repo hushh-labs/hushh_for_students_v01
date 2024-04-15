@@ -6,17 +6,21 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.project_gemini.databinding.ActivityCheckoutMenuBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.razorpay.Checkout
+import com.razorpay.PaymentData
+import com.razorpay.PaymentResultWithDataListener
 import dev.shreyaspatil.easyupipayment.EasyUpiPayment
 import dev.shreyaspatil.easyupipayment.listener.PaymentStatusListener
-import dev.shreyaspatil.easyupipayment.model.PaymentApp
 import dev.shreyaspatil.easyupipayment.model.TransactionDetails
 import dev.shreyaspatil.easyupipayment.model.TransactionStatus
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,13 +28,13 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
-class CheckoutMenuAct : AppCompatActivity(), PaymentStatusListener {
+class CheckoutMenuAct : AppCompatActivity(), PaymentResultWithDataListener {
 
     private lateinit var binding: ActivityCheckoutMenuBinding
     private val db = FirebaseFirestore.getInstance()
     private lateinit var easyUpiPayment: EasyUpiPayment
-    // Declare ProgressDialog variable
     private var progressDialog: ProgressDialog? = null
+    private val razorpayKey = "rzp_live_08rMlga16zsqdy"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,92 +51,94 @@ class CheckoutMenuAct : AppCompatActivity(), PaymentStatusListener {
         // Setting current timestamp
         val timeStamp = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.getDefault()).format(Date())
         binding.textView14.text = "$timeStamp"
-
-        binding.textView7.text = "Invoice$name"
+        binding.textView7.text = "Invoice_$name"
 
         // Setting current date and time
         val currentDateTime = SimpleDateFormat("dd MMM yyyy h:mm a", Locale.getDefault()).format(Date())
         binding.textView10.text = currentDateTime
 
+
+        // Calculate delivery charge
         val amountWithoutDelivery = (totalOrderVolume - discountedCost).toFloat()
 
-        val amount: Float
-        // Check if current time is between 7:30 PM and 1:30 AM
+        val deliveryCharge: Int
         val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY) // Get current hour in 24-hour format
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
 
-        val isLateNight = hour >= 22 || hour < 1 // Check if it's between 7:30 PM and 1:30 AM
+        val isLateNight = hour >= 22 || hour < 2
 
-        var deliveryCharge = 0
         if (isLateNight) {
-            if (amountWithoutDelivery < 50) {
-                amount = amountWithoutDelivery + 5
-                deliveryCharge = 5
-                Toast.makeText(this, "Delivery fee of Rs 5 is added", Toast.LENGTH_SHORT).show()
-            } else {
-                amount = amountWithoutDelivery + 10
-                deliveryCharge = 10
-                Toast.makeText(this, "Delivery fee of Rs 10 is added", Toast.LENGTH_SHORT).show()
+            var calculatedDeliveryCharge = (amountWithoutDelivery * 0.10).toInt() // 10% of the total order value
+
+            // Check if calculated delivery charge is less than 5, then set it to 5
+            if (calculatedDeliveryCharge < 5) {
+                calculatedDeliveryCharge = 5
             }
+
+            deliveryCharge = calculatedDeliveryCharge
         } else {
-            // No delivery charge if it's not late night
-            amount = amountWithoutDelivery
-            Toast.makeText(this, "No delivery charge applied", Toast.LENGTH_SHORT).show()
+            deliveryCharge = 0
         }
 
+        // Calculate total amount
+        val amount = amountWithoutDelivery + deliveryCharge
 
         binding.textView36.text = "Rs $deliveryCharge" // Set delivery charge text
-        binding.textView20.text = "Rs$totalOrderVolume - Rs$discountedCost + Rs$deliveryCharge = Rs$amount" // Update amount text
+        binding.textView20.text = "Rs$totalOrderVolume - Rs$discountedCost + Rs$deliveryCharge = Rs$amount" // Update total amount text
+
+
 
 
         binding.textView20.text = "Rs$totalOrderVolume - Rs$discountedCost = Rs$amount"
         binding.textView22.text = "Rs$discountedCost"
         binding.textView201.text = "Payment Request of $amount"
 
-        // Generate random characters
-        fun generateRandomString(length: Int): String {
-            val charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-            return (1..length)
-                .map { charset.random() }
-                .joinToString("")
-        }
-
-        // Generate transactionId
-        val orderId = "${System.currentTimeMillis().toString().substring(0, 8)}${generateRandomString(8)}"
-
-        // Generate transactionRefId
         val currentTime = System.currentTimeMillis().toString()
-        val transactionRefId = "${currentTime.substring(0, 10)}${generateRandomString(6)}"
 
-
-        // Initialize EasyUpiPayment
-        easyUpiPayment = EasyUpiPayment(this) {
-            this.paymentApp = PaymentApp.ALL
-            // Your Paytm merchant details
-            //this.payeeVpa = "Vyapar.169774393413@hdfcbank"
-            this.payeeVpa = "q761243897@ybl"
-            this.payeeName = "DELHI CAFE DELIGHT"
-            this.payeeMerchantCode = "68190203"
-            this.description = "Order From Stumato"
-            // Set transactionId and transactionRefId
-            // Set transactionId and transactionRefId
-
-            // Set transactionId and transactionRefId
-            this.transactionId = "T$orderId"
-            Toast.makeText(this@CheckoutMenuAct, "$transactionId", Toast.LENGTH_SHORT).show()
-            this.transactionRefId = transactionRefId
-            Toast.makeText(this@CheckoutMenuAct, "$transactionRefId", Toast.LENGTH_SHORT).show()
-            this.amount = String.format(Locale.getDefault(), "%.2f", amount) // Format amount to two decimal places
-        }
-
-        // Set PaymentStatusListener
-        easyUpiPayment.setPaymentStatusListener(this)
+        // Initialize Razorpay checkout
+        Checkout.preload(applicationContext)
 
         // Handle imageView31 click
         binding.imageView31.setOnClickListener {
-            // Start the payment process
-            easyUpiPayment.startPayment()
+            // Check if textView15.text is not null
+            if (binding.textView15.text != null) {
+                startRazorpayPayment(amount, contact)
+                Log.d("Payment", "Payment process started")
+            } else {
+                Toast.makeText(this, "Please add items to your order before proceeding to payment", Toast.LENGTH_SHORT).show()
+            }
         }
+
+        //after setting click listener for imageView31
+        binding.button.setOnClickListener {
+            // Get the current user's document reference
+            val currentUserDocument = db.collection("users").document(contact.toString())
+
+            // Retrieve all documents from the "ordersfrommenu" collection
+            currentUserDocument.collection("ordersfrommenu")
+                .get()
+                .addOnSuccessListener { ordersSnapshot ->
+                    // Loop through each document snapshot
+                    for (document in ordersSnapshot.documents) {
+                        // Get the reference to each document and delete it
+                        val documentRef = document.reference
+                        documentRef.delete()
+                            .addOnSuccessListener {
+                                // Document successfully deleted
+                                Toast.makeText(this, "Document deleted successfully", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { e ->
+                                // Handle any errors
+                                Toast.makeText(this, "Error deleting document: $e", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    // Handle any errors
+                    Toast.makeText(this, "Error getting documents: $e", Toast.LENGTH_SHORT).show()
+                }
+        }
+
 
         val currentUserDocument = db.collection("users").document(contact.toString())
         currentUserDocument.collection("ordersfrommenu")
@@ -162,81 +168,31 @@ class CheckoutMenuAct : AppCompatActivity(), PaymentStatusListener {
             }
     }
 
-    override fun onTransactionCompleted(transactionDetails: TransactionDetails) {
-        if (transactionDetails.transactionStatus == TransactionStatus.SUCCESS) {
-            // Handle transaction completion and retrieve details
-            Toast.makeText(this, "Payment Done", Toast.LENGTH_SHORT).show()
+    private fun startRazorpayPayment(amount: Float, contact: String?) {
+        val razorpay = Checkout()
+        razorpay.setKeyID(razorpayKey)
 
-            // Make imageView38 visible
-            binding.imageView38.visibility = View.VISIBLE
+        try {
+            val options = JSONObject()
+            options.put("name", "hushh for students")
+            options.put("description", "Order From Stumato")
+            options.put("image", "YOUR_IMAGE_URL") // Replace with your image URL
+            options.put("currency", "INR")
+            options.put("amount", (amount * 100).toInt())  // Amount multiplied by 100 as Razorpay expects amount in paise
+            options.put("prefill", JSONObject().apply {
+                put("email", "example@email.com")  // User's email
+                put("contact", contact)  // User's contact number
+            })
 
-            // Check if imageView38 is visible
-            if (binding.imageView38.visibility == View.VISIBLE) {
-                // Take screenshot of linear layout and upload
-                takessamdupload()
-
-                // Update itemStock in Firestore documents
-                val contact = intent.getStringExtra("contact")
-                val currentUserDocument = db.collection("users").document(contact.toString())
-                currentUserDocument.collection("ordersfrommenu").get()
-                    .addOnSuccessListener { ordersSnapshot ->
-                        for (document in ordersSnapshot.documents) {
-                            val itemName = document.id
-                            val userInputOfStock = document.getString("userInputOfStock")?.toIntOrNull() ?: 0
-
-                            // Update itemStock in business_menu
-                            val businessMenuCollection = db.collection("business_menu")
-                                .document("OAC Canteen")
-                                .collection("menu")
-                                .document(itemName)
-
-                            businessMenuCollection.get().addOnSuccessListener { menuDocSnapshot ->
-                                val currentStock = menuDocSnapshot.getString("itemStock")?.toIntOrNull() ?: 0
-                                val updatedStock = currentStock - userInputOfStock
-                                businessMenuCollection.update("itemStock", updatedStock.toString())
-                                    .addOnSuccessListener {
-                                        // Toast for successful stock update
-                                        Toast.makeText(
-                                            this,
-                                            "$itemName stock updated successfully",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                    .addOnFailureListener { exception ->
-                                        // Toast for failure in updating stock
-                                        Toast.makeText(
-                                            this,
-                                            "Failed to update $itemName stock",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                            }
-                        }
-                        // Remove all documents from "ordersfrommenu"
-                        for (document in ordersSnapshot.documents) {
-                            currentUserDocument.collection("ordersfrommenu").document(document.id).delete()
-                        }
-                    }
-                    .addOnFailureListener { exception ->
-                        // Toast for failure in fetching orders
-                        Toast.makeText(
-                            this,
-                            "Failed to fetch orders",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-            }
-        } else {
-            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+            razorpay.open(this, options)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error in payment: ${e.message}", Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
         }
     }
 
-
-
-    private fun takessamdupload() {
+    private fun takessamdupload(logMessage: String) {
         showLoadingDialog()
-
-
         // Take screenshot of linear layout and save to Firebase Storage
         val linearLayoutInvoice = findViewById<View>(R.id.linearlayoutinvoice)
         val bitmap = getBitmapFromView(linearLayoutInvoice)
@@ -254,7 +210,7 @@ class CheckoutMenuAct : AppCompatActivity(), PaymentStatusListener {
                     val imageUrl = uri.toString()
 
                     // Update Firestore with the screenshot URL
-                    updateFirestore(imageUrl,bitmap)
+                    updateFirestore(imageUrl,bitmap,logMessage)
                 }
             }.addOnFailureListener { exception ->
                 Toast.makeText(this, "Failed to upload screenshot", Toast.LENGTH_SHORT).show()
@@ -283,41 +239,36 @@ class CheckoutMenuAct : AppCompatActivity(), PaymentStatusListener {
         return bitmap
     }
 
-    override fun onTransactionCancelled() {
-        // Handle transaction cancellation
-        Toast.makeText(this, "Cancelled by user", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        easyUpiPayment.removePaymentStatusListener()
-    }
-
-    private fun updateFirestore(imageUrl: String, bitmap: Bitmap) {
+    private fun updateFirestore(imageUrl: String, bitmap: Bitmap, logMessage: String) {
         val timeStamp = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.getDefault()).format(Date())
         val brandname = intent.getStringExtra("CardName")
-
         val totalAmount = intent.getIntExtra("totalOrderVolume", 0)
         val discountedCost = intent.getIntExtra("discountedCost", 0)
         val amount = (totalAmount - discountedCost).toFloat()
 
         // Calculate delivery charge
         val amountWithoutDelivery = (totalAmount - discountedCost).toFloat()
+
         val deliveryCharge: Int
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
 
-        val isLateNight = hour >= 22 || hour < 1
+        val isLateNight = hour >= 22 || hour < 2
 
         if (isLateNight) {
-            deliveryCharge = if (amountWithoutDelivery < 50) {
-                5
-            } else {
-                10
+            var calculatedDeliveryCharge = (amountWithoutDelivery * 0.10).toInt() // 10% of the total order value
+
+            // Check if calculated delivery charge is less than 5, then set it to 5
+            if (calculatedDeliveryCharge < 5) {
+                calculatedDeliveryCharge = 5
             }
+
+            deliveryCharge = calculatedDeliveryCharge
         } else {
             deliveryCharge = 0
         }
+
+
 
         // Add delivery charge to totalAmount
         val totalAmountWithDelivery = totalAmount + deliveryCharge
@@ -371,6 +322,7 @@ class CheckoutMenuAct : AppCompatActivity(), PaymentStatusListener {
                         "Order by:\n$name\n" +
                                 "OrderId: ${brandname}${timeStamp}\n" +
                                 "OrderTotal: $totalAmountWithDelivery\n" +
+                                "*transaction details: $logMessage*\n" +
                                 "Discount: Rs ${discountedCost}.00 discount\n" +
                                 "BillUrl: $imageUrl\n" +
                                 "UserPaid: ${String.format(Locale.getDefault(), "Rs %.2f - Rs %.2f = Rs %.2f", totalAmount.toFloat(), discountedCost.toFloat(), amount)}\n" +
@@ -405,5 +357,75 @@ class CheckoutMenuAct : AppCompatActivity(), PaymentStatusListener {
             Toast.makeText(this, "WhatsApp not installed on your device", Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun onPaymentSuccess(paymentId: String?, p1: PaymentData?) {
+        // Handle payment success
+        Toast.makeText(this, "Payment Successful", Toast.LENGTH_SHORT).show()
+        val logMessage = "Payment Successful"
+
+        binding.textView42.text = "Payment Successful"
+        takessamdupload(logMessage)
+
+        // Update itemStock in Firestore documents
+        val contact = intent.getStringExtra("contact")
+        val currentUserDocument = db.collection("users").document(contact.toString())
+        currentUserDocument.collection("ordersfrommenu").get()
+            .addOnSuccessListener { ordersSnapshot ->
+                for (document in ordersSnapshot.documents) {
+                    val itemName = document.id
+                    val userInputOfStock = document.getString("userInputOfStock")?.toIntOrNull() ?: 0
+
+                    // Update itemStock in business_menu
+                    val businessMenuCollection = db.collection("business_menu")
+                        .document("OAC Canteen")
+                        .collection("menu")
+                        .document(itemName)
+
+                    businessMenuCollection.get().addOnSuccessListener { menuDocSnapshot ->
+                        val currentStock = menuDocSnapshot.getString("itemStock")?.toIntOrNull() ?: 0
+                        val updatedStock = currentStock - userInputOfStock
+                        businessMenuCollection.update("itemStock", updatedStock.toString())
+                            .addOnSuccessListener {
+                                // Toast for successful stock update
+                                Toast.makeText(
+                                    this,
+                                    "$itemName stock updated successfully",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            .addOnFailureListener { exception ->
+                                // Toast for failure in updating stock
+                                Toast.makeText(
+                                    this,
+                                    "Failed to update $itemName stock",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    }
+                }
+                // Remove all documents from "ordersfrommenu"
+                for (document in ordersSnapshot.documents) {
+                    currentUserDocument.collection("ordersfrommenu").document(document.id).delete()
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Toast for failure in fetching orders
+                Toast.makeText(
+                    this,
+                    "Failed to fetch orders",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+
+    }
+
+    override fun onPaymentError(paytmErrorCode: Int, errorDescription: String?, p2: PaymentData?) {
+        // Handle payment failure
+        Toast.makeText(this, "Payment Failed: $errorDescription", Toast.LENGTH_SHORT).show()
+
+    }
+
+
 
 }
