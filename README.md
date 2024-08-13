@@ -75,41 +75,12 @@ cd hushh_for_students_v01
 
 # Run the app on your Android device or emulator
 
----
 
-## 🌟 Features Overview
-
-- **💬 Connecting Peers**: Direct messaging, group chats, and multimedia sharing.
-- **👻 Anonymous Mode**: Discuss sensitive topics or seek advice without revealing your identity.
-- **🛍️ Sale & Purchase**: Buy and sell various products and services within the campus.
-- **📅 Personalized Time Table**: Manage your schedule and receive notifications.
-- **🎉 Events**: Discover and RSVP to campus events.
-
----
-
-## 🚀 Getting Started
-
-1. **Sign Up**: Register with your institute-specific email.
-2. **Personalize**: Customize your newsfeed and notifications.
-3. **Engage**: Chat, buy, sell, and participate in campus activities.
-
----
-
-## 🎨 Contributing
-
-We ❤️ contributions! Feel free to fork this repo and submit a pull request.
-
-```bash
-# Create a new branch
-git checkout -b feature-branch
-
-# Commit your changes
-git commit -m "Added some awesome features"
-
-# Push to the branch
-git push origin feature-branch
-
-# Open a pull request
-
+🌟 Features Overview
+💬 Connecting Peers: Direct messaging, group chats, and multimedia sharing.
+👻 Anonymous Mode: Discuss sensitive topics or seek advice without revealing your identity.
+🛍️ Sale & Purchase: Buy and sell various products and services within the campus.
+📅 Personalized Time Table: Manage your schedule and receive notifications.
+🎉 Events: Discover and RSVP to campus events.
 
 
