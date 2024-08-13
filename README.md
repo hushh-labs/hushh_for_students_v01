@@ -1,6 +1,6 @@
 # 🎓 **Hushh For Students (HFS)** 🎓
 
-![HFS Banner](https://github.com/hushh-labs/hushh_for_students_v01/blob/main/assets/banner.png)  
+
 *Connecting College Students Like Never Before!* 🚀
 
 ---
