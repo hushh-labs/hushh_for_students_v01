@@ -26,6 +26,7 @@ import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.project_gemini.composeact.MiniStoreAct
 import com.example.project_gemini.databinding.ActivityShowHomeCardBinding
 import com.google.android.gms.drive.Contents
 import com.google.firebase.firestore.FieldPath
@@ -176,8 +177,8 @@ class ShowHomeCardAct : AppCompatActivity() {
 
     private fun checkAndNavigate(title: String?, name: String?, contactNumber: String?) {
         if (title == "OAC Canteen") {
-            // If title is "OAC Canteen", navigate to MenuActivity with intent
-            val intent = Intent(this, MenuActivity::class.java).apply {
+            // If title is "OAC Canteen", navigate to MiniStoreAct with intent
+            val intent = Intent(this, MiniStoreAct::class.java).apply {
                 putExtra("parentName", title)
                 putExtra("contact", contactNumber)
                 putExtra("name", name)
@@ -188,6 +189,7 @@ class ShowHomeCardAct : AppCompatActivity() {
             Toast.makeText(this, "We are accepting offline orders for this store, please check in store", Toast.LENGTH_SHORT).show()
         }
     }
+
 
 
     private fun fetchCurrentFolderNameFromFirestore(globalPhoneNumber: String?, parentName: String?) {
