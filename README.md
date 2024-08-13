@@ -75,6 +75,8 @@ cd hushh_for_students_v01
 
 # Run the app on your Android device or emulator
 
+---
+
 ## 🌟 Features Overview
 
 - **💬 Connecting Peers**: Direct messaging, group chats, and multimedia sharing.
