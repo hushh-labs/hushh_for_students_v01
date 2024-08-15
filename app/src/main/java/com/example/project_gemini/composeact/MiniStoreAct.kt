@@ -26,19 +26,38 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.project_gemini.R
 import com.example.project_gemini.composeact.ui.theme.Project_GeminiTheme
+import com.google.android.gms.ads.*
 
 class MiniStoreAct : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize the Google Mobile Ads SDK
+        MobileAds.initialize(this) { initializationStatus ->
+            Log.d("AdMob", "MobileAds initialized: $initializationStatus")
+        }
+
         setContent {
             Project_GeminiTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Column {
-                        MiniStoreTopBar()
-                        WebViewScreen("https://hushh-for-students.mini.store")
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        // Box container to hold the WebView and TopBar components
+                        Box(modifier = Modifier.weight(1f)) {
+                            Column(modifier = Modifier.fillMaxSize()) {
+                                MiniStoreTopBar()
+                                WebViewScreen("https://hushh-for-students-store-vone.mini.site")
+                            }
+                        }
+                        // Banner ad positioned at the bottom of the screen
+                        BannerAdView(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+
+                        )
                     }
                 }
             }
@@ -73,14 +92,14 @@ fun MiniStoreTopBar() {
                 Row {
                     IconButton(onClick = { /* TODO: Handle share action */ }) {
                         Icon(
-                            painter = painterResource(R.drawable.share_icon), // Replace with your share icon
+                            painter = painterResource(R.drawable.share_icon),
                             contentDescription = "Share",
                             tint = Color.Black
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Switch(
-                        checked = true, // Assuming "Online" is true
+                        checked = true, // Assuming "Online"
                         onCheckedChange = { /* TODO: Handle toggle action */ },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = Color.Green,
@@ -107,6 +126,7 @@ fun WebViewScreen(url: String) {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
 
+            // Configure WebView settings
             settings.javaScriptEnabled = true
             settings.javaScriptCanOpenWindowsAutomatically = true
             settings.allowContentAccess = true
@@ -118,9 +138,9 @@ fun WebViewScreen(url: String) {
             settings.cacheMode = WebSettings.LOAD_DEFAULT
             settings.loadsImagesAutomatically = true
 
+            // Custom WebViewClient to handle URL loading and payment status detection
             webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                    // Assuming payment gateway redirects to specific URLs upon success or failure
                     Log.d("WebView", "Navigating to: $url")
                     if (url.contains("payment_success")) {
                         showToast(context, "Payment successful!")
@@ -139,9 +159,53 @@ fun WebViewScreen(url: String) {
                 }
             }
 
+
             loadUrl(url)
         }
     }, modifier = Modifier.fillMaxSize())
+}
+
+@Composable
+fun BannerAdView(modifier: Modifier = Modifier) {
+    AndroidView(
+        factory = { context ->
+            AdView(context).apply {
+                adUnitId = "ca-app-pub-3940256099942544/9214589741"
+                // Test Ad Unit ID
+
+                // Set ad size
+                setAdSize(AdSize.BANNER)
+
+                // Set AdListener to monitor ad events
+                adListener = object : AdListener() {
+                    override fun onAdLoaded() {
+                        Log.d("AdView", "Ad loaded successfully")
+                    }
+
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        Log.e("AdView", "Ad failed to load: ${adError.message}")
+                    }
+
+                    override fun onAdOpened() {
+                        Log.d("AdView", "Ad opened")
+                    }
+
+                    override fun onAdClicked() {
+                        Log.d("AdView", "Ad clicked")
+                    }
+
+                    override fun onAdClosed() {
+                        Log.d("AdView", "Ad closed")
+                    }
+                }
+
+                // Load the ad
+                val adRequest = AdRequest.Builder().build()
+                loadAd(adRequest)
+            }
+        },
+        modifier = modifier
+    )
 }
 
 private fun showToast(context: Context, message: String) {
@@ -152,9 +216,19 @@ private fun showToast(context: Context, message: String) {
 @Composable
 fun GreetingPreview2() {
     Project_GeminiTheme {
-        Column {
-            MiniStoreTopBar()
-            WebViewScreen("https://hushh-for-students.mini.store")
+        Column(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    MiniStoreTopBar()
+                    WebViewScreen("https://hushh-for-students-store-vone.mini.site")
+                }
+            }
+            // Preview for BannerAdView at the bottom
+            BannerAdView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            )
         }
     }
 }
