@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <uses-feature
         android:name="android.hardware.fingerprint"
         android:required="false" />
@@ -35,11 +34,25 @@
         android:theme="@style/Theme.Project_Gemini"
         tools:targetApi="31">
         <activity
+            android:name=".composeact.HushhJobAct"
+            android:exported="false"
+            android:label="@string/title_activity_hushh_job"
+            android:theme="@style/Theme.Project_Gemini" />
+        <activity
+            android:name=".composeact.HfsJobAct"
+            android:exported="false"
+            android:label="@string/title_activity_hfs_job"
+            android:theme="@style/Theme.Project_Gemini" />
+        <activity
+            android:name=".composeact.ui.theme.HushhJobAct"
+            android:exported="false"
+            android:label="@string/title_activity_hushh_job"
+            android:theme="@style/Theme.Project_Gemini" />
+        <activity
             android:name=".composeact.MiniStoreAct"
             android:exported="false"
             android:label="@string/title_activity_mini_store"
             android:theme="@style/Theme.Project_Gemini" />
-
         <activity
             android:name=".trialxmlact"
             android:exported="false" />
@@ -64,7 +77,6 @@
         <activity
             android:name=".HushhCoinsEarnedAct"
             android:exported="false" />
-
         <activity
             android:name=".ShowHomeCardAct"
             android:exported="false" />
@@ -116,9 +128,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-3940256099942544~3347511713" />
     </application>
 
 </manifest>

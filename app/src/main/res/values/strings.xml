@@ -9,6 +9,8 @@
     <string name="resend_text">Didn\'t receive code? <font color="#E34C65"> Request again </font> </string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_mini_store">MiniStoreAct</string>
+    <string name="title_activity_hushh_job">HushhJobAct</string>
+    <string name="title_activity_hfs_job">HfsJobAct</string>
 
 
 </resources>

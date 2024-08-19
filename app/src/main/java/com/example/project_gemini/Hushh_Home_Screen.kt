@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
+import com.example.project_gemini.composeact.HushhJobAct
 import com.example.project_gemini.model.UserModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -134,9 +135,24 @@ class Hushh_Home_Screen : AppCompatActivity() {
             showToast("Biometric authentication is not available on this device.")
         }
 
+
+
+
+
+        val imageView46: ImageView = findViewById(R.id.imageView46)
+
+        imageView46.setOnClickListener {
+            // Transfer to HushhJobAct when imageView46 is clicked
+            val intent = Intent(this, HushhJobAct::class.java)
+            startActivity(intent)
+        }
+
+
+
         globalPhoneNumber = textViewContact.text.toString()
 
         val phoneNumberExtra = intent.getStringExtra("PHONE_NUMBER")
+
         if (!phoneNumberExtra.isNullOrEmpty()) {
             createHushhCoinsDocument(phoneNumberExtra)
         } else {
@@ -200,11 +216,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
             showToast("You are already on the home screen")
         }
 
-        val imageView46:ImageView = findViewById(R.id.imageView46)
-
-        imageView46.setOnClickListener {
-            showToast("We are implementing this feature")
-        }
 
 
 

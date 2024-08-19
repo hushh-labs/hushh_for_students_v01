@@ -322,10 +322,6 @@
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
-                <!-- Auto layout, variables, and unit scale are not yet supported -->
-
-
-                <!-- drawable/rectangle_6.xml -->
 
 
             </LinearLayout>
