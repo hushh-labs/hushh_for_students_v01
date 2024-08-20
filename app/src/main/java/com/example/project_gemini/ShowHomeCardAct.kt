@@ -15,7 +15,6 @@ import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -28,7 +27,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_gemini.composeact.MiniStoreAct
 import com.example.project_gemini.databinding.ActivityShowHomeCardBinding
-import com.google.android.gms.drive.Contents
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -60,7 +63,8 @@ class ShowHomeCardAct : AppCompatActivity() {
     private var uploadedFileNames = mutableListOf<String>()
     private val uploadedFileHashes = mutableListOf<String>()
 
-
+    private var rewardedAd: RewardedAd? = null
+    private val TAG = "ShowHomeCardAct"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,14 +74,12 @@ class ShowHomeCardAct : AppCompatActivity() {
         showCoinsAddedDialog()
 
         binding.imageView8.setOnClickListener {
-            val intent = Intent(this, Hushh_Home_Screen::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, Hushh_Home_Screen::class.java))
         }
 
         card1 = findViewById(R.id.card)
         card2 = findViewById(R.id.card2)
 
-        // Set click listeners for card flipping
         card1.setOnClickListener {
             flipCard()
         }
@@ -99,7 +101,6 @@ class ShowHomeCardAct : AppCompatActivity() {
             flipCard()
         }
 
-        // Retrieve data from intent
         val intent = intent
         val imageURL = intent.getStringExtra("imageURL")
         val name = intent.getStringExtra("name")
@@ -109,46 +110,27 @@ class ShowHomeCardAct : AppCompatActivity() {
         val contactNumber = intent.getStringExtra("globalPhoneNumber")
         val parentName = intent.getStringExtra("parentName")
 
-
-        // Load imageURL into ImageView using Glide
         loadImage(imageURL)
 
-        // Set name and email into TextView
         binding.textView12.text = "$name\n$email"
 
-        
-
         binding.dialogPositiveButton1.setOnClickListener {
-            // Retrieve the agent's phone number from the TextView
             val agentPhoneNumber = binding.textView121.text.toString().split("\n")[0]
-
-            // Create a message to be sent
-            val message = "Hi, there"
-
-            // Open WhatsApp with the agent's phone number and the message
-            openWhatsApp(agentPhoneNumber, message)
+            openWhatsApp(agentPhoneNumber, "Hi, there")
         }
 
-
-        // Calculate and set age into TextView
         val age = calculateAge(dob)
         binding.textAge.text = age.toString()
 
         fetchDataFromFirestore(contactNumber, title)
-
         fetchUserDataFromAgentsCollection(parentName)
-
         fetchBusinessLogoFromFirestore(parentName)
 
         binding.btncheckoutMenu.setOnClickListener {
-            val title = intent.getStringExtra("parentName")
-            val name = intent.getStringExtra("name")
-            val contactNumber = intent.getStringExtra("globalPhoneNumber")
-            
-            checkAndNavigate(title, name, contactNumber)
+            loadAndShowRewardedAd {
+                checkAndNavigate(title, name, contactNumber)
+            }
         }
-
-
 
         binding.dialogNegativeButton.setOnClickListener {
             shareCardAsImage()
@@ -157,7 +139,6 @@ class ShowHomeCardAct : AppCompatActivity() {
         binding.btnUploadAssets.setOnClickListener {
             showLoadingDialog()
             createFirebaseFolder()
-            // Add code here to open file picker or any mechanism for uploading images, files, etc.
         }
 
         binding.btnViewAssets.setOnClickListener {
@@ -173,11 +154,73 @@ class ShowHomeCardAct : AppCompatActivity() {
             }
             startActivity(intent)
         }
+
+        loadRewardedAd()
+    }
+
+    private fun loadAndShowRewardedAd(onAdComplete: () -> Unit) {
+        rewardedAd?.show(this) { rewardItem ->
+            val rewardAmount = rewardItem.amount
+            val rewardType = rewardItem.type
+            Log.d(TAG, "User earned reward: $rewardAmount $rewardType")
+            Toast.makeText(this, "Reward earned: $rewardAmount $rewardType", Toast.LENGTH_SHORT).show()
+            onAdComplete()
+        } ?: run {
+            Log.d(TAG, "The rewarded ad wasn't ready yet.")
+            Toast.makeText(this, "Ad is not ready yet", Toast.LENGTH_SHORT).show()
+            onAdComplete()
+        }
+    }
+
+    private fun loadRewardedAd() {
+        val adRequest = AdRequest.Builder().build()
+
+        RewardedAd.load(this, "ca-app-pub-5762805546760080/5509843631", adRequest,
+            object : RewardedAdLoadCallback() {
+                override fun onAdLoaded(rewardedAd: RewardedAd) {
+                    this@ShowHomeCardAct.rewardedAd = rewardedAd
+                    Log.i(TAG, "Rewarded Ad loaded successfully")
+                    setFullScreenContentCallback()
+                }
+
+                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                    Log.d(TAG, "Rewarded Ad failed to load: ${loadAdError.message}")
+                    rewardedAd = null
+                    Toast.makeText(this@ShowHomeCardAct, "Failed to load ad", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    private fun setFullScreenContentCallback() {
+        rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdClicked() {
+                Log.d(TAG, "Rewarded Ad was clicked.")
+            }
+
+            override fun onAdDismissedFullScreenContent() {
+                Log.d(TAG, "Rewarded Ad dismissed fullscreen content.")
+                rewardedAd = null
+                Toast.makeText(this@ShowHomeCardAct, "Ad dismissed", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onAdFailedToShowFullScreenContent(adError: com.google.android.gms.ads.AdError) {
+                Log.e(TAG, "Rewarded Ad failed to show fullscreen content: ${adError.message}")
+                rewardedAd = null
+                Toast.makeText(this@ShowHomeCardAct, "Failed to show ad", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onAdImpression() {
+                Log.d(TAG, "Rewarded Ad recorded an impression.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                Log.d(TAG, "Rewarded Ad showed fullscreen content.")
+            }
+        }
     }
 
     private fun checkAndNavigate(title: String?, name: String?, contactNumber: String?) {
         if (title == "OAC Canteen") {
-            // If title is "OAC Canteen", navigate to MiniStoreAct with intent
             val intent = Intent(this, MiniStoreAct::class.java).apply {
                 putExtra("parentName", title)
                 putExtra("contact", contactNumber)
@@ -185,39 +228,25 @@ class ShowHomeCardAct : AppCompatActivity() {
             }
             startActivity(intent)
         } else {
-            // Show toast for offline orders
             Toast.makeText(this, "We are accepting offline orders for this store, please check in store", Toast.LENGTH_SHORT).show()
         }
     }
 
-
-
     private fun fetchCurrentFolderNameFromFirestore(globalPhoneNumber: String?, parentName: String?) {
-        // Check if any of the necessary information is null
         if (globalPhoneNumber != null && parentName != null) {
-            // Access Firestore collection and document
             val usersCollection = firestore.collection("users")
             val userDocument = usersCollection.document(globalPhoneNumber)
-
-            // Inner collection for the parentName
             val parentCollection = userDocument.collection(parentName)
 
-            // Fetch the "card_assets" document
             parentCollection.document("card_assets")
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
-                    if (documentSnapshot.exists()) {
-                        // If the document exists, retrieve the currentFolderName field
-                        val currentFolderfetchedfromfirestoreName = documentSnapshot.getString("currentFolderName")
-                        if (!currentFolderfetchedfromfirestoreName.isNullOrBlank()) {
-                            // Display the current folder name using a Toast
-                            showToast("Current Path Name: $currentFolderfetchedfromfirestoreName")
-                            getDownloadLink(currentFolderfetchedfromfirestoreName)
-                        } else {
-                            showToast("Current Folder Name is empty")
-                        }
+                    val currentFolderfetchedfromfirestoreName = documentSnapshot.getString("currentFolderName")
+                    if (!currentFolderfetchedfromfirestoreName.isNullOrBlank()) {
+                        showToast("Current Path Name: $currentFolderfetchedfromfirestoreName")
+                        getDownloadLink(currentFolderfetchedfromfirestoreName)
                     } else {
-                        showToast("Document 'card_assets' not found in Firestore for parentName: $parentName")
+                        showToast("Current Folder Name is empty")
                     }
                 }
                 .addOnFailureListener { e ->
@@ -232,49 +261,35 @@ class ShowHomeCardAct : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-
-
     private fun fetchBusinessLogoFromFirestore(parentName: String?) {
         parentName?.let {
-            // Access Firestore collection and retrieve business logo URL
             val businessOnboardCollection = firestore.collection("buisness_onboard")
             businessOnboardCollection.document(it)
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
-                    if (documentSnapshot.exists()) {
-                        // Check if the document has a "logoURL" field
-                        val logoURL = documentSnapshot.getString("logoURL")
-                        if (!logoURL.isNullOrBlank()) {
-                            // Load logoURL into ImageView using Glide
-                            loadBusinessLogo(logoURL)
-                        } else {
-                            Toast.makeText(this, "Logo URL is empty", Toast.LENGTH_SHORT).show()
-                        }
+                    val logoURL = documentSnapshot.getString("logoURL")
+                    if (!logoURL.isNullOrBlank()) {
+                        loadBusinessLogo(logoURL)
                     } else {
-                        Toast.makeText(this, "Document not found in 'buisness_onboard' collection for parentName: $parentName", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Logo URL is empty", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener { exception ->
-                    // Handle failure
                     Toast.makeText(this, "Failed to fetch business logo: ${exception.message}", Toast.LENGTH_SHORT).show()
                     Log.e("FetchBusinessLogo", "Failed to fetch business logo", exception)
                 }
         } ?: run {
-            // Handle the case where parentName is null
-            val errorMessage = "Parent name is null"
-            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-            Log.e("FetchBusinessLogo", errorMessage)
+            Toast.makeText(this, "Parent name is null", Toast.LENGTH_SHORT).show()
+            Log.e("FetchBusinessLogo", "Parent name is null")
         }
     }
 
     private fun loadBusinessLogo(logoURL: String) {
-        // Load business logo into ImageView using Glide
         Glide.with(this)
             .load(logoURL)
-            .placeholder(R.drawable.logo_splash_screen) // Placeholder image while loading
+            .placeholder(R.drawable.logo_splash_screen)
             .into(binding.imageView172)
     }
-
 
     private fun showCoinsAddedDialog() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_layout, null)
@@ -283,13 +298,11 @@ class ShowHomeCardAct : AppCompatActivity() {
 
         val dialog = builder.create()
 
-        // Access views in the custom layout
         val titleTextView = dialogView.findViewById<TextView>(R.id.dialogTitle)
         val messageTextView = dialogView.findViewById<TextView>(R.id.dialogMessage)
         val okButton = dialogView.findViewById<ImageButton>(R.id.dialogPositiveButton)
         val earnmore = dialogView.findViewById<ImageButton>(R.id.dialogNegativeButton)
 
-        // Set values dynamically
         titleTextView.text = "Congratulations!"
         messageTextView.text = "Whoo!! 50 hushh coins added for adding this card"
 
@@ -297,26 +310,16 @@ class ShowHomeCardAct : AppCompatActivity() {
             dialog.dismiss()
         }
 
-        // Set OnClickListener for the "earnmore" button
         earnmore.setOnClickListener {
-            // Retrieve the agent's phone number from the intent
             val contactNumber = intent.getStringExtra("globalPhoneNumber")
-
-            // Create an intent to navigate to NewCardMarketAct
             val newCardMarketIntent = Intent(this, NewCardMarketAct::class.java)
             newCardMarketIntent.putExtra("CONTACT_NUMBER", contactNumber)
-
-            // Start the activity with the new intent
             startActivity(newCardMarketIntent)
-
-            // Dismiss the dialog
             dialog.dismiss()
         }
 
-        // Show the custom dialog
         dialog.show()
     }
-
 
     private fun openWhatsApp(phoneNumber: String, message: String) {
         val intent = Intent(Intent.ACTION_VIEW)
@@ -332,31 +335,22 @@ class ShowHomeCardAct : AppCompatActivity() {
 
     private fun fetchUserDataFromAgentsCollection(parentName: String?) {
         parentName?.let {
-            Toast.makeText(this, "parentName$parentName", Toast.LENGTH_SHORT).show()
-            // Access Firestore collection and retrieve user documents
             val usersCollection = firestore.collection("users_agents")
             usersCollection.get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
-                        // Check if the document has a "brand" field and it matches the parentName
                         if (document.contains("brand") && document.getString("brand") == parentName) {
-                            // Fetch other required fields
                             val agentPhoneNumber = document.getString("phoneNumber")
                             val agentEmailAddress = document.getString("emailAddress")
 
-                            // Append the data to resultText
                             val resultText = "$agentPhoneNumber\n$agentEmailAddress"
                             binding.textView121.text = resultText
                             Toast.makeText(this, "Data fetched successfully$resultText", Toast.LENGTH_SHORT).show()
-
                             binding.dialogPositiveButton1.visibility = View.VISIBLE
-
-                            // If you only need to process the first matching document, you can break the loop here.
                             break
                         }
                     }
 
-                    // If no matching document is found, display a message
                     if (binding.textView121.text.isBlank()) {
                         val message = "No matching document found in 'users_agents' collection for brand: $parentName"
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -364,23 +358,16 @@ class ShowHomeCardAct : AppCompatActivity() {
                     }
                 }
                 .addOnFailureListener { exception ->
-                    // Handle failure
                     val errorMessage = "Failed to fetch data from users_agents: ${exception.message}"
                     Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
                     Log.e("FetchUserData", errorMessage, exception)
                 }
         } ?: run {
-            // Handle the case where parentName is null
             val errorMessage = "Parent name is null"
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
             Log.e("FetchUserData", errorMessage)
         }
     }
-
-
-
-
-
 
     private fun showLoadingDialog() {
         progressDialog = ProgressDialog(this)
@@ -394,28 +381,18 @@ class ShowHomeCardAct : AppCompatActivity() {
     }
 
     private fun createFirebaseFolder() {
-        // Retrieve necessary data from the intent
-        val intent = intent
         val globalPhoneNumber = intent.getStringExtra("globalPhoneNumber")
         val parentName = intent.getStringExtra("parentName")
 
-        // Construct a "path" for the file (it will look like a folder structure)
         val folderPath = "$globalPhoneNumber/$parentName"
-
-
-
-        // Use the path to create a reference to the file in Firebase Storage
         val storageRef = storage.reference.child(folderPath)
 
-        // Proceed with file upload, Firebase Storage will create necessary paths
         storageRef.putBytes(byteArrayOf())
             .addOnSuccessListener {
                 dismissLoadingDialog()
                 Toast.makeText(this, "Folder created or already exists", Toast.LENGTH_SHORT).show()
                 currentFolderName = folderPath
-
                 saveFolderInfoToFirestore(globalPhoneNumber, parentName, currentFolderName)
-                // Now that the "folder" is created, allow the user to pick/upload files
                 pickAndUploadFiles()
             }
             .addOnFailureListener { e ->
@@ -425,25 +402,18 @@ class ShowHomeCardAct : AppCompatActivity() {
     }
 
     private fun saveFolderInfoToFirestore(globalPhoneNumber: String?, parentName: String?, folderPath: String?) {
-        // Check if any of the necessary information is null
         if (globalPhoneNumber != null && parentName != null && folderPath != null) {
-            // Access Firestore collection and document
             val usersCollection = firestore.collection("users")
             val userDocument = usersCollection.document(globalPhoneNumber)
-
-            // Inner collection for the parentName
             val parentCollection = userDocument.collection(parentName)
 
-            // Check if the document named "card_assets" exists
             parentCollection.document("card_assets")
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                     if (documentSnapshot.exists()) {
-                        // If the document exists, update the currentFolderName field
                         parentCollection.document("card_assets")
                             .update(mapOf("currentFolderName" to folderPath))
                             .addOnSuccessListener {
-                                // Display the fetched folder path using a Toast
                                 val pathFetched = documentSnapshot.getString("currentFolderName")
                                 Toast.makeText(this, "Folder information updated in Firestore. Path Fetched: $pathFetched", Toast.LENGTH_SHORT).show()
                             }
@@ -451,11 +421,9 @@ class ShowHomeCardAct : AppCompatActivity() {
                                 Toast.makeText(this, "Failed to update folder information in Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
                             }
                     } else {
-                        // If the document doesn't exist, create it with the currentFolderName field
                         parentCollection.document("card_assets")
                             .set(mapOf("currentFolderName" to folderPath))
                             .addOnSuccessListener {
-                                // Display the fetched folder path using a Toast
                                 val pathFetched = folderPath
                                 Toast.makeText(this, "Folder information saved to Firestore. Path Fetched: $pathFetched", Toast.LENGTH_SHORT).show()
                             }
@@ -472,12 +440,9 @@ class ShowHomeCardAct : AppCompatActivity() {
         }
     }
 
-
-
     private fun pickAndUploadFiles() {
-        // Use an Intent to open a file picker or any mechanism for uploading files
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*/*" // Allow all file types
+        intent.type = "*/*"
         startActivityForResult(intent, PICK_FILE_REQUEST_CODE)
     }
 
@@ -485,7 +450,6 @@ class ShowHomeCardAct : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.data?.let { fileUri ->
-                // Use the currentFolderName to upload the file to the correct folder
                 uploadFileToFirebaseStorage(fileUri, currentFolderName)
             }
         }
@@ -504,17 +468,12 @@ class ShowHomeCardAct : AppCompatActivity() {
 
     private fun uploadFileToFirebaseStorage(fileUri: Uri, folderName: String?) {
         folderName?.let { folder ->
-            // Show loader while uploading
             showLoadingDialog()
-
-            val fileName = fileUri.lastPathSegment ?: ""
 
             val inputStream = contentResolver.openInputStream(fileUri)
             val fileHash = inputStream?.let { calculateHash(it) }
 
-            // Check if the file is already uploaded
             if (uploadedFileHashes.contains(fileHash)) {
-                // File already exists, show toast and dismiss loader
                 dismissLoadingDialog()
                 showToast("You already have this file in the folder")
             } else {
@@ -522,12 +481,9 @@ class ShowHomeCardAct : AppCompatActivity() {
 
                 storageRef.putFile(fileUri)
                     .addOnSuccessListener {
-                        // Fetch the list of items in the folder after a successful upload
                         storageRef.parent?.listAll()
                             ?.addOnSuccessListener { listResult ->
-                                // Get the total number of items in the folder
                                 val totalItems = listResult.items.size
-
                                 if (totalItems >= 10) {
                                     updateCoinsInFirestore(
                                         intent.getStringExtra("globalPhoneNumber"),
@@ -535,23 +491,16 @@ class ShowHomeCardAct : AppCompatActivity() {
                                         totalItems
                                     )
                                 }
-
-
                                 showToast("File uploaded successfully\nTotal items in folder: $totalItems")
                             }
                             ?.addOnFailureListener { e ->
                                 showToast("Failed to get the total number of items in the folder: ${e.message}")
                             }
 
-                        // Dismiss loader on success
                         dismissLoadingDialog()
-                        // Add the uploaded file hash to the list
-                        if (fileHash != null) {
-                            uploadedFileHashes.add(fileHash)
-                        }
+                        fileHash?.let { uploadedFileHashes.add(it) }
                     }
                     .addOnFailureListener { e ->
-                        // Dismiss loader on failure
                         dismissLoadingDialog()
                         showToast("Failed to upload file: ${e.message}")
                     }
@@ -562,29 +511,20 @@ class ShowHomeCardAct : AppCompatActivity() {
     private fun updateCoinsInFirestore(contactNumber: String?, folder: String?, totalItems: Int) {
         contactNumber?.let { phoneNumber ->
             folder?.let { folderName ->
-                // Access Firestore collection and document
                 val usersCollection = firestore.collection("users")
                 val userDocument = usersCollection.document(phoneNumber)
-
-                // Inner collection "coins"
                 val coinsCollection = userDocument.collection("coins")
-
-                // Document "hushhcoins"
                 val hushhCoinsDocument = coinsCollection.document("hushhcoins")
-
-                // Use FieldPath to handle special characters in the field name
                 val fieldName = FieldPath.of("${folder}dataupload")
 
-                val maxValue = 100 // Set your maximum value here
+                val maxValue = 100
 
-                // Check if the aggregation field already exists
                 hushhCoinsDocument.get().addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val documentSnapshot = task.result
+                        val newValue = totalItems * 20
+                        val limitedValue = newValue.coerceAtMost(maxValue)
                         if (documentSnapshot != null && documentSnapshot.exists()) {
-                            // Field exists, update its value with a limit
-                            val newValue = totalItems * 20
-                            val limitedValue = newValue.coerceAtMost(maxValue) // Limit the value to the maximum
                             hushhCoinsDocument
                                 .update(fieldName, limitedValue)
                                 .addOnSuccessListener {
@@ -594,9 +534,6 @@ class ShowHomeCardAct : AppCompatActivity() {
                                     showToast("Failed to update coins: ${e.message}")
                                 }
                         } else {
-                            // Field doesn't exist, create it with a limit
-                            val newValue = totalItems * 20
-                            val limitedValue = newValue.coerceAtMost(maxValue) // Limit the value to the maximum
                             val data = hashMapOf(fieldName to limitedValue)
                             hushhCoinsDocument
                                 .set(data, SetOptions.merge())
@@ -619,27 +556,11 @@ class ShowHomeCardAct : AppCompatActivity() {
         }
     }
 
-
-
-
-
-
-
     private fun shareCardAsImage() {
-        // Capture the CardView as a bitmap
         val cardBitmap = getBitmapFromView(card1)
-
-        // Save the bitmap to a temporary file
         val file = saveBitmapToFile(cardBitmap)
+        val contentUri = FileProvider.getUriForFile(this, "com.example.project_gemini.fileprovider", file)
 
-        // Create a content URI for the file using FileProvider
-        val contentUri = FileProvider.getUriForFile(
-            this,
-            "com.example.project_gemini.fileprovider",
-            file
-        )
-
-        // Share the image using an Intent
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_STREAM, contentUri)
@@ -661,8 +582,8 @@ class ShowHomeCardAct : AppCompatActivity() {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val fileName = "card_image_$timeStamp.jpg"
         val directory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-
         val file = File(directory, fileName)
+
         try {
             val stream = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
@@ -691,8 +612,7 @@ class ShowHomeCardAct : AppCompatActivity() {
                     qaAdapter.submitList(qaList)
                 }
                 .addOnFailureListener { e ->
-                    // Handle failure
-                    Toast.makeText(this, "Failed to fetch data: ${e.message}", Toast.LENGTH_SHORT).show()
+                    showToast("Failed to fetch data: ${e.message}")
                 }
         }
     }
@@ -732,82 +652,57 @@ class ShowHomeCardAct : AppCompatActivity() {
     }
 
     private fun loadImage(imageURL: String?) {
-        // Load image into ImageView using Glide
         Glide.with(this)
             .load(imageURL)
-            .placeholder(R.drawable.logo_splash_screen) // Placeholder image while loading
-            // Error image if loading fails
+            .placeholder(R.drawable.logo_splash_screen)
             .into(binding.cardImage)
     }
 
     private fun calculateAge(dob: String?): Int {
-        if (dob != null) {
-            val dobDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(dob)
-            if (dobDate != null) {
+        dob?.let {
+            val dobDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(it)
+            dobDate?.let { date ->
                 val currentDate = Date()
-                val ageInMillis = currentDate.time - dobDate.time
-                val ageInYears = ageInMillis / (365.25 * 24 * 60 * 60 * 1000).toLong()
-                return ageInYears.toInt()
+                val ageInMillis = currentDate.time - date.time
+                return (ageInMillis / (365.25 * 24 * 60 * 60 * 1000)).toInt()
             }
         }
         return 0
     }
 
     private fun getDownloadLink(folderPath: String) {
-        // Check if folderPath is not null or empty
         if (folderPath.isNotBlank()) {
             val storageRef = storage.reference.child(folderPath)
-
-            // Get a list of items (files) in the folder
             storageRef.listAll()
                 .addOnSuccessListener { listResult ->
                     val downloadUrls = mutableListOf<String>()
-
-                    // Iterate through each item and get the download URL
                     listResult.items.forEach { item ->
                         item.downloadUrl
                             .addOnSuccessListener { uri ->
                                 downloadUrls.add(uri.toString())
-
-                                // Check if we have retrieved all download URLs
                                 if (downloadUrls.size == listResult.items.size) {
-                                    // Concatenate the URLs into a single string separated by commas
                                     val concatenatedUrls = downloadUrls.joinToString("  +hushh+  ")
-                                    // Now you can use concatenatedUrls as needed (e.g., share or display)
                                     setQrInDataCard(concatenatedUrls)
                                 }
                             }
                             .addOnFailureListener { e ->
-                                Toast.makeText(
-                                    this,
-                                    "Failed to get download link for ${item.name}: ${e.message}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                showToast("Failed to get download link for ${item.name}: ${e.message}")
                             }
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to list items in the folder: ${e.message}", Toast.LENGTH_SHORT).show()
+                    showToast("Failed to list items in the folder: ${e.message}")
                 }
         } else {
-            Toast.makeText(this, "Invalid folder path", Toast.LENGTH_SHORT).show()
+            showToast("Invalid folder path")
         }
     }
 
     private fun shareDataCardAsImage(qrCodeContent: String) {
         val cardBitmap = getBitmapFromView(binding.cardShareInfo)
-
-        // Save the bitmap to a temporary file
         val file = saveBitmapToFile(cardBitmap)
+        val contentUri = FileProvider.getUriForFile(this, "com.example.project_gemini.fileprovider", file)
 
-        // Create a content URI for the file using FileProvider
-        val contentUri = FileProvider.getUriForFile(
-            this,
-            "com.example.project_gemini.fileprovider",
-            file
-        )
-
-        // Share the image using an Intent
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_STREAM, contentUri)
@@ -815,34 +710,23 @@ class ShowHomeCardAct : AppCompatActivity() {
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
 
-        // Set the QR code content for the card before sharing
-
-
-        // Start the activity for sharing
         startActivity(Intent.createChooser(shareIntent, "Share Card"))
     }
 
     private fun setQrInDataCard(qrCodeContent: String) {
-        // Generate QR code bitmap
         val qrCodeBitmap = generateQrCodeBitmap(qrCodeContent)
-
-        // Set the QR code bitmap to ImageView with id "imageView174"
         binding.imageView174.setImageBitmap(qrCodeBitmap)
         shareDataCardAsImage(qrCodeContent)
-
     }
 
     private fun generateQrCodeBitmap(content: String): Bitmap? {
-        try {
-            // Set up the QR code parameters
+        return try {
             val hints: MutableMap<EncodeHintType, Any> = EnumMap(EncodeHintType::class.java)
-            hints[EncodeHintType.MARGIN] = 2 // Set margin for the QR code
+            hints[EncodeHintType.MARGIN] = 2
 
-            // Encode the content as QR code
             val writer = MultiFormatWriter()
             val bitMatrix = writer.encode(content, BarcodeFormat.QR_CODE, 400, 400, hints)
 
-            // Create a Bitmap from the bit matrix
             val width = bitMatrix.width
             val height = bitMatrix.height
             val pixels = IntArray(width * height)
@@ -855,19 +739,14 @@ class ShowHomeCardAct : AppCompatActivity() {
 
             val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
-
-            return bitmap
-
+            bitmap
         } catch (e: WriterException) {
             e.printStackTrace()
+            null
         }
-
-        return null
     }
 
-
     private fun shareFolderLinks(links: String) {
-        // Share the links using an Intent
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, links)

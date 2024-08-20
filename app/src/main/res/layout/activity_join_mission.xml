@@ -128,15 +128,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <!-- <ImageView
                 android:id="@+id/imageView21"
                 android:layout_width="169dp"
                 android:layout_height="172dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/cardmissionsappengagement" />
+                app:srcCompat="@drawable/cardmissionsappengagement" /> -->
 
-            <ImageView
+            <!-- <ImageView
                 android:id="@+id/jm1appengagement"
                 android:layout_width="145dp"
                 android:layout_height="32dp"
@@ -145,7 +145,7 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/imageView21"
                 app:layout_constraintStart_toStartOf="@+id/imageView21"
-                app:layout_constraintTop_toTopOf="@+id/imageView21" />
+                app:layout_constraintTop_toTopOf="@+id/imageView21" /> -->
 
             <ImageView
                 android:id="@+id/imageView23"
@@ -179,14 +179,13 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView23" />
 
 
-
             <ImageView
                 android:id="@+id/imageView24"
                 android:layout_width="169dp"
                 android:layout_height="172dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="@+id/imageView21"
-                app:layout_constraintTop_toBottomOf="@+id/imageView21"
+                app:layout_constraintTop_toBottomOf="@+id/imageView23"
                 app:srcCompat="@drawable/cardengagement" />
 
             <ImageView
@@ -203,10 +202,9 @@
                 android:id="@+id/imageView25"
                 android:layout_width="169dp"
                 android:layout_height="172dp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="@+id/imageView23"
                 app:layout_constraintStart_toStartOf="@+id/imageView23"
-                app:layout_constraintTop_toBottomOf="@+id/imageView21"
+                app:layout_constraintTop_toTopOf="@+id/imageView24"
                 app:srcCompat="@drawable/instagrambliss" />
 
             <ImageView
@@ -219,7 +217,7 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView25"
                 app:layout_constraintTop_toTopOf="@+id/imageView25" />
 
-            <ImageView
+           <!-- <ImageView
                 android:id="@+id/imageView26"
                 android:layout_width="169dp"
                 android:layout_height="172dp"
@@ -227,9 +225,9 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView24"
                 app:layout_constraintStart_toStartOf="@+id/imageView24"
                 app:layout_constraintTop_toBottomOf="@+id/imageView24"
-                app:srcCompat="@drawable/gamifiedcahllangecard" />
+                app:srcCompat="@drawable/gamifiedcahllangecard" /> -->
 
-            <ImageView
+            <!-- <ImageView
                 android:id="@+id/jm5gamifiedcahllange"
                 android:layout_width="145dp"
                 android:layout_height="32dp"
@@ -237,7 +235,7 @@
                 android:src="@drawable/btnjoinmission"
                 app:layout_constraintEnd_toEndOf="@+id/imageView26"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView26" />
+                app:layout_constraintTop_toTopOf="@+id/imageView26" /> -->
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline23"

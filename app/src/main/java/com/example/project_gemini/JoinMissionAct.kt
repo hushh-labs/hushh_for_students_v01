@@ -41,9 +41,9 @@ class JoinMissionAct : AppCompatActivity() {
             // You can show a default value or handle it as per your requirement
         }
 
-        binding.jm1appengagement.setOnClickListener {
-            handleButtonClick()
-        }
+//        binding.jm1appengagement.setOnClickListener {
+//            handleButtonClick()
+//        }
 
         binding.jm2appengagement.setOnClickListener {
             handleLinkedinButtonClick()
@@ -69,12 +69,12 @@ class JoinMissionAct : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.jm5gamifiedcahllange.setOnClickListener {
-            // Start NewCardMarketAct and pass the contact information
-            val intent = Intent(this, NewCardMarketAct::class.java)
-            intent.putExtra("CONTACT", contact)
-            startActivity(intent)
-        }
+//        binding.jm5gamifiedcahllange.setOnClickListener {
+//            // Start NewCardMarketAct and pass the contact information
+//            val intent = Intent(this, NewCardMarketAct::class.java)
+//            intent.putExtra("CONTACT", contact)
+//            startActivity(intent)
+//        }
 
 
         // Listen for real-time updates on timestamp
@@ -166,11 +166,11 @@ class JoinMissionAct : AppCompatActivity() {
                         val timestampTime = timestamp.toDate().time
 
                         val difference = currentTime - timestampTime
-                        if (difference >= 3600000) {
-                            binding.jm1appengagement.visibility = View.VISIBLE
-                        } else {
-                            binding.jm1appengagement.visibility = View.GONE
-                        }
+//                        if (difference >= 3600000) {
+//                            binding.jm1appengagement.visibility = View.VISIBLE
+//                        } else {
+//                            binding.jm1appengagement.visibility = View.GONE
+//                        }
                     }
                 }
             }
@@ -183,8 +183,8 @@ class JoinMissionAct : AppCompatActivity() {
             // Update Firestore field
             contact?.let { it1 -> updateFirestoreField(it1) }
 
-            // Hide the ImageView for 1 minute
-            binding.jm1appengagement.visibility = View.GONE
+
+//            binding.jm1appengagement.visibility = View.GONE
 
             // After 1 minute, show the ImageView again
             Handler().postDelayed({

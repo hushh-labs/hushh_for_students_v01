@@ -170,8 +170,9 @@ fun BannerAdView(modifier: Modifier = Modifier) {
     AndroidView(
         factory = { context ->
             AdView(context).apply {
-                adUnitId = "ca-app-pub-3940256099942544/9214589741"
-                // Test Ad Unit ID
+                //Ad Unit ID
+                adUnitId = "ca-app-pub-5762805546760080/8838714550"
+
 
                 // Set ad size
                 setAdSize(AdSize.BANNER)

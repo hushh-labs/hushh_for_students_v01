@@ -38,16 +38,7 @@
             android:exported="false"
             android:label="@string/title_activity_hushh_job"
             android:theme="@style/Theme.Project_Gemini" />
-        <activity
-            android:name=".composeact.HfsJobAct"
-            android:exported="false"
-            android:label="@string/title_activity_hfs_job"
-            android:theme="@style/Theme.Project_Gemini" />
-        <activity
-            android:name=".composeact.ui.theme.HushhJobAct"
-            android:exported="false"
-            android:label="@string/title_activity_hushh_job"
-            android:theme="@style/Theme.Project_Gemini" />
+
         <activity
             android:name=".composeact.MiniStoreAct"
             android:exported="false"
@@ -131,7 +122,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-5762805546760080~2920744283" />
     </application>
 
 </manifest>
