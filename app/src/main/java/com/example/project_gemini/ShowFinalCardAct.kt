@@ -6,13 +6,10 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.database.FirebaseDatabase
@@ -29,7 +26,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
-
 
 class ShowFinalCardAct : AppCompatActivity() {
 
@@ -56,8 +52,6 @@ class ShowFinalCardAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_final_card2)
 
-
-
         cardView = findViewById(R.id.card)
         surpriseAnimation = findViewById(R.id.surprise)
 
@@ -66,16 +60,16 @@ class ShowFinalCardAct : AppCompatActivity() {
         contactNumber = intent.getStringExtra("contactNumber")
         imageViewQR = findViewById(R.id.imageView18)
 
-        Toast.makeText(this, "Title: $title", Toast.LENGTH_SHORT).show()
+        // Toast.makeText(this, "Title: $titlenew", Toast.LENGTH_SHORT).show() // Commented out
 
         contactNumber?.let {
-            Toast.makeText(this, "Contact Number: $it", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Contact Number: $it", Toast.LENGTH_SHORT).show() // Commented out
 
             cardName = titlenew
 
             // Initialize loader dialog
             progressDialog = ProgressDialog(this)
-            progressDialog.setMessage("Loading Image and User Info...")
+            progressDialog.setMessage("Adding card into hushh wallet...")
             progressDialog.setCancelable(false)
             progressDialog.show()
 
@@ -83,12 +77,10 @@ class ShowFinalCardAct : AppCompatActivity() {
             loadCardImage(titlenew)
         } ?: run {
             // Dismiss the progressDialog if contactNumber is null
-            progressDialog?.dismiss()
-            Toast.makeText(this, "Contact Number not found", Toast.LENGTH_SHORT).show()
+            progressDialog.dismiss()
+            Toast.makeText(this, "Contact Number not found", Toast.LENGTH_SHORT).show() // Urgent Toast
         }
     }
-
-
 
     private fun loadCardImage(title: String?) {
         if (title != null) {
@@ -120,18 +112,18 @@ class ShowFinalCardAct : AppCompatActivity() {
                         })
                     } ?: run {
                         progressDialog.dismiss() // Dismiss loader on failure
-                        Toast.makeText(this, "Image URL not found", Toast.LENGTH_SHORT).show()
+                        // Toast.makeText(this, "Image URL not found", Toast.LENGTH_SHORT).show() // Commented out
                         Log.e(TAG, "Image URL not found")
                     }
                 }
                 .addOnFailureListener { exception ->
                     progressDialog.dismiss() // Dismiss loader on failure
-                    Toast.makeText(this, "Failed to fetch image", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(this, "Failed to fetch image", Toast.LENGTH_SHORT).show() // Commented out
                     Log.e(TAG, "Failed to fetch image", exception)
                 }
         } else {
             progressDialog.dismiss() // Dismiss loader if title is null
-            Toast.makeText(this, "Title not found", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Title not found", Toast.LENGTH_SHORT).show() // Commented out
             Log.e(TAG, "Title not found")
         }
     }
@@ -155,9 +147,6 @@ class ShowFinalCardAct : AppCompatActivity() {
                         val textViewContact = findViewById<TextView>(R.id.textViewContact)
                         val textViewEmail = findViewById<TextView>(R.id.textViewemail)
 
-
-
-
                         textViewName.text = "$firstName $lastName"
                         textViewContact.text = "$contactNumber"
                         textViewEmail.text = emailAddress
@@ -173,30 +162,24 @@ class ShowFinalCardAct : AppCompatActivity() {
                                     "&emailAddress=${textViewEmail.text.toString()}" +
                                     "&cardName=${cardName}"
 
-                        val imageViewQR = findViewById<ImageView>(R.id.imageView18)
                         generateQRCode(qrCodeData, imageViewQR)
-
-
-
-
-                        progressDialog.dismiss() // Dismiss loader on success
 
                         // Call saveDataToFirebaseRealtimeDatabase only if user information is loaded
                         saveDataToFirebaseRealtimeDatabase(cardName.toString(), contactNumber)
                     } else {
                         progressDialog.dismiss() // Dismiss loader if user information is not loaded
-                        Toast.makeText(this, "Failed to fetch user information", Toast.LENGTH_SHORT).show()
+                        // Toast.makeText(this, "Failed to fetch user information", Toast.LENGTH_SHORT).show() // Commented out
                         Log.e(TAG, "Failed to fetch user information")
                     }
                 }
                 .addOnFailureListener { exception ->
                     progressDialog.dismiss() // Dismiss loader on failure
-                    Toast.makeText(this, "Failed to fetch user information", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(this, "Failed to fetch user information", Toast.LENGTH_SHORT).show() // Commented out
                     Log.e(TAG, "Failed to fetch user information", exception)
                 }
         } else {
             progressDialog.dismiss() // Dismiss loader if contactNumber is null
-            Toast.makeText(this, "Contact Number not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Contact Number not found", Toast.LENGTH_SHORT).show() // Urgent Toast
             Log.e(TAG, "Contact Number not found")
         }
     }
@@ -207,7 +190,7 @@ class ShowFinalCardAct : AppCompatActivity() {
             val bitMatrix = multiFormatWriter.encode(data, BarcodeFormat.QR_CODE, 500, 500)
             val barcodeEncoder = BarcodeEncoder()
             val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
-            this.imageViewQR.setImageBitmap(bitmap)
+            imageViewQR.setImageBitmap(bitmap)
         } catch (e: WriterException) {
             e.printStackTrace()
         }
@@ -229,7 +212,7 @@ class ShowFinalCardAct : AppCompatActivity() {
     private fun saveDataToFirebaseRealtimeDatabase(cardName: String?, contactNumber: String) {
         if (cardName != null && firstName != null && lastName != null && emailAddress != null) {
             // Take a screenshot of the card view
-            Toast.makeText(this, "Card Name: $cardName", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Card Name: $cardName", Toast.LENGTH_SHORT).show() // Commented out
             val bitmap = getBitmapFromView(cardView)
 
             if (bitmap != null) {
@@ -268,9 +251,7 @@ class ShowFinalCardAct : AppCompatActivity() {
 
                         cardView.visibility = View.GONE
 
-
-
-                        Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show()
+                        // Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show() // Commented out
                         progressDialog.dismiss()
 
                         // Delay for 2 seconds
@@ -290,27 +271,26 @@ class ShowFinalCardAct : AppCompatActivity() {
                             finish()
                         }, 4000)
                     }.addOnFailureListener { exception ->
-                        Toast.makeText(this, "Failed to get image download URL", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Failed to get image download URL", Toast.LENGTH_SHORT).show() // Urgent Toast
                         Log.e(TAG, "Failed to get image download URL", exception)
                         progressDialog.dismiss()
                     }
                 }.addOnFailureListener { exception ->
-                    Toast.makeText(this, "Failed to upload screenshot", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(this, "Failed to upload screenshot", Toast.LENGTH_SHORT).show() // Commented out
                     Log.e(TAG, "Failed to upload screenshot", exception)
                     progressDialog.dismiss()
                 }
             } else {
-                Toast.makeText(this, "Bitmap is null", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "Bitmap is null", Toast.LENGTH_SHORT).show() // Commented out
                 Log.e(TAG, "Bitmap is null")
                 progressDialog.dismiss()
             }
         } else {
-            Toast.makeText(this, "Some user information is missing", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Some user information is missing", Toast.LENGTH_SHORT).show() // Commented out
             Log.e(TAG, "Some user information is missing")
             progressDialog.dismiss()
         }
     }
-
 
     private fun getBitmapFromView(view: View): Bitmap {
         val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)

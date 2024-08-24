@@ -12,8 +12,8 @@ android {
         applicationId = "com.example.project_gemini"
         minSdk = 24
         targetSdk = 34
-        versionCode = 23
-        versionName = "1.23"
+        versionCode = 25
+        versionName = "1.25"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

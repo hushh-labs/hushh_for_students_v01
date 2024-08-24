@@ -56,7 +56,8 @@ class ShowCardDetailsAct : AppCompatActivity() {
         }
 
         contactNumber?.let {
-            Toast.makeText(this, "Contact Number: $it", Toast.LENGTH_SHORT).show()
+            // Commented out non-essential Toast
+            // Toast.makeText(this, "Contact Number: $it", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -79,6 +80,8 @@ class ShowCardDetailsAct : AppCompatActivity() {
                 }
                 .addOnFailureListener { exception ->
                     // Handle failure
+                    // Toast message for error is optional based on your need to alert the user
+                    // Toast.makeText(this, "Failed to load image: ${exception.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }

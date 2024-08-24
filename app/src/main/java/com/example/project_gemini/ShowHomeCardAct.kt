@@ -167,7 +167,7 @@ class ShowHomeCardAct : AppCompatActivity() {
             onAdComplete()
         } ?: run {
             Log.d(TAG, "The rewarded ad wasn't ready yet.")
-            Toast.makeText(this, "Ad is not ready yet", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Ad is not ready yet", Toast.LENGTH_SHORT).show() // Commented out
             onAdComplete()
         }
     }
@@ -186,7 +186,7 @@ class ShowHomeCardAct : AppCompatActivity() {
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     Log.d(TAG, "Rewarded Ad failed to load: ${loadAdError.message}")
                     rewardedAd = null
-                    Toast.makeText(this@ShowHomeCardAct, "Failed to load ad", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(this@ShowHomeCardAct, "Failed to load ad", Toast.LENGTH_SHORT).show() // Commented out
                 }
             })
     }
@@ -200,13 +200,13 @@ class ShowHomeCardAct : AppCompatActivity() {
             override fun onAdDismissedFullScreenContent() {
                 Log.d(TAG, "Rewarded Ad dismissed fullscreen content.")
                 rewardedAd = null
-                Toast.makeText(this@ShowHomeCardAct, "Ad dismissed", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this@ShowHomeCardAct, "Ad dismissed", Toast.LENGTH_SHORT).show() // Commented out
             }
 
             override fun onAdFailedToShowFullScreenContent(adError: com.google.android.gms.ads.AdError) {
                 Log.e(TAG, "Rewarded Ad failed to show fullscreen content: ${adError.message}")
                 rewardedAd = null
-                Toast.makeText(this@ShowHomeCardAct, "Failed to show ad", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this@ShowHomeCardAct, "Failed to show ad", Toast.LENGTH_SHORT).show() // Commented out
             }
 
             override fun onAdImpression() {
@@ -220,7 +220,7 @@ class ShowHomeCardAct : AppCompatActivity() {
     }
 
     private fun checkAndNavigate(title: String?, name: String?, contactNumber: String?) {
-        if (title == "OAC Canteen") {
+        if (title == "OAC Canteen" || title == "Thapa mess") {
             val intent = Intent(this, MiniStoreAct::class.java).apply {
                 putExtra("parentName", title)
                 putExtra("contact", contactNumber)
@@ -231,6 +231,7 @@ class ShowHomeCardAct : AppCompatActivity() {
             Toast.makeText(this, "We are accepting offline orders for this store, please check in store", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun fetchCurrentFolderNameFromFirestore(globalPhoneNumber: String?, parentName: String?) {
         if (globalPhoneNumber != null && parentName != null) {
@@ -271,15 +272,15 @@ class ShowHomeCardAct : AppCompatActivity() {
                     if (!logoURL.isNullOrBlank()) {
                         loadBusinessLogo(logoURL)
                     } else {
-                        Toast.makeText(this, "Logo URL is empty", Toast.LENGTH_SHORT).show()
+                        // Toast.makeText(this, "Logo URL is empty", Toast.LENGTH_SHORT).show() // Commented out
                     }
                 }
                 .addOnFailureListener { exception ->
-                    Toast.makeText(this, "Failed to fetch business logo: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Failed to fetch business logo: ${exception.message}", Toast.LENGTH_SHORT).show() // Important
                     Log.e("FetchBusinessLogo", "Failed to fetch business logo", exception)
                 }
         } ?: run {
-            Toast.makeText(this, "Parent name is null", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Parent name is null", Toast.LENGTH_SHORT).show() // Commented out
             Log.e("FetchBusinessLogo", "Parent name is null")
         }
     }
@@ -329,7 +330,7 @@ class ShowHomeCardAct : AppCompatActivity() {
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, "WhatsApp not installed on your device", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "WhatsApp not installed on your device", Toast.LENGTH_SHORT).show() // Important
         }
     }
 
@@ -345,7 +346,7 @@ class ShowHomeCardAct : AppCompatActivity() {
 
                             val resultText = "$agentPhoneNumber\n$agentEmailAddress"
                             binding.textView121.text = resultText
-                            Toast.makeText(this, "Data fetched successfully$resultText", Toast.LENGTH_SHORT).show()
+                            // Toast.makeText(this, "Data fetched successfully$resultText", Toast.LENGTH_SHORT).show() // Commented out
                             binding.dialogPositiveButton1.visibility = View.VISIBLE
                             break
                         }
@@ -353,18 +354,18 @@ class ShowHomeCardAct : AppCompatActivity() {
 
                     if (binding.textView121.text.isBlank()) {
                         val message = "No matching document found in 'users_agents' collection for brand: $parentName"
-                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                        // Toast.makeText(this, message, Toast.LENGTH_SHORT).show() // Commented out
                         Log.d("FetchUserData", message)
                     }
                 }
                 .addOnFailureListener { exception ->
                     val errorMessage = "Failed to fetch data from users_agents: ${exception.message}"
-                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show() // Important
                     Log.e("FetchUserData", errorMessage, exception)
                 }
         } ?: run {
             val errorMessage = "Parent name is null"
-            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show() // Commented out
             Log.e("FetchUserData", errorMessage)
         }
     }
@@ -390,14 +391,14 @@ class ShowHomeCardAct : AppCompatActivity() {
         storageRef.putBytes(byteArrayOf())
             .addOnSuccessListener {
                 dismissLoadingDialog()
-                Toast.makeText(this, "Folder created or already exists", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Folder created or already exists", Toast.LENGTH_SHORT).show() // Important
                 currentFolderName = folderPath
                 saveFolderInfoToFirestore(globalPhoneNumber, parentName, currentFolderName)
                 pickAndUploadFiles()
             }
             .addOnFailureListener { e ->
                 dismissLoadingDialog()
-                Toast.makeText(this, "Failed to create folder: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to create folder: ${e.message}", Toast.LENGTH_SHORT).show() // Important
             }
     }
 
@@ -415,28 +416,28 @@ class ShowHomeCardAct : AppCompatActivity() {
                             .update(mapOf("currentFolderName" to folderPath))
                             .addOnSuccessListener {
                                 val pathFetched = documentSnapshot.getString("currentFolderName")
-                                Toast.makeText(this, "Folder information updated in Firestore. Path Fetched: $pathFetched", Toast.LENGTH_SHORT).show()
+                                // Toast.makeText(this, "Folder information updated in Firestore. Path Fetched: $pathFetched", Toast.LENGTH_SHORT).show() // Commented out
                             }
                             .addOnFailureListener { e ->
-                                Toast.makeText(this, "Failed to update folder information in Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Failed to update folder information in Firestore: ${e.message}", Toast.LENGTH_SHORT).show() // Important
                             }
                     } else {
                         parentCollection.document("card_assets")
                             .set(mapOf("currentFolderName" to folderPath))
                             .addOnSuccessListener {
                                 val pathFetched = folderPath
-                                Toast.makeText(this, "Folder information saved to Firestore. Path Fetched: $pathFetched", Toast.LENGTH_SHORT).show()
+                                // Toast.makeText(this, "Folder information saved to Firestore. Path Fetched: $pathFetched", Toast.LENGTH_SHORT).show() // Commented out
                             }
                             .addOnFailureListener { e ->
-                                Toast.makeText(this, "Failed to save folder information to Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Failed to save folder information to Firestore: ${e.message}", Toast.LENGTH_SHORT).show() // Important
                             }
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to check if 'card_assets' document exists: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Failed to check if 'card_assets' document exists: ${e.message}", Toast.LENGTH_SHORT).show() // Important
                 }
         } else {
-            Toast.makeText(this, "Invalid data for Firestore update", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Invalid data for Firestore update", Toast.LENGTH_SHORT).show() // Commented out
         }
     }
 
@@ -475,7 +476,7 @@ class ShowHomeCardAct : AppCompatActivity() {
 
             if (uploadedFileHashes.contains(fileHash)) {
                 dismissLoadingDialog()
-                showToast("You already have this file in the folder")
+                showToast("You already have this file in the folder") // Important
             } else {
                 val storageRef = storage.reference.child("$folder/$fileHash")
 
@@ -491,10 +492,10 @@ class ShowHomeCardAct : AppCompatActivity() {
                                         totalItems
                                     )
                                 }
-                                showToast("File uploaded successfully\nTotal items in folder: $totalItems")
+                                showToast("File uploaded successfully\nTotal items in folder: $totalItems") // Important
                             }
                             ?.addOnFailureListener { e ->
-                                showToast("Failed to get the total number of items in the folder: ${e.message}")
+                                showToast("Failed to get the total number of items in the folder: ${e.message}") // Important
                             }
 
                         dismissLoadingDialog()
@@ -502,7 +503,7 @@ class ShowHomeCardAct : AppCompatActivity() {
                     }
                     .addOnFailureListener { e ->
                         dismissLoadingDialog()
-                        showToast("Failed to upload file: ${e.message}")
+                        showToast("Failed to upload file: ${e.message}") // Important
                     }
             }
         }
@@ -528,31 +529,31 @@ class ShowHomeCardAct : AppCompatActivity() {
                             hushhCoinsDocument
                                 .update(fieldName, limitedValue)
                                 .addOnSuccessListener {
-                                    showToast("Coins updated successfully")
+                                    showToast("Coins updated successfully") // Important
                                 }
                                 .addOnFailureListener { e ->
-                                    showToast("Failed to update coins: ${e.message}")
+                                    showToast("Failed to update coins: ${e.message}") // Important
                                 }
                         } else {
                             val data = hashMapOf(fieldName to limitedValue)
                             hushhCoinsDocument
                                 .set(data, SetOptions.merge())
                                 .addOnSuccessListener {
-                                    showToast("Coins field created and updated successfully")
+                                    showToast("Coins field created and updated successfully") // Important
                                 }
                                 .addOnFailureListener { e ->
-                                    showToast("Failed to create and update coins field: ${e.message}")
+                                    showToast("Failed to create and update coins field: ${e.message}") // Important
                                 }
                         }
                     } else {
-                        showToast("Failed to check if the aggregation field exists: ${task.exception?.message}")
+                        showToast("Failed to check if the aggregation field exists: ${task.exception?.message}") // Important
                     }
                 }
             } ?: run {
-                showToast("Invalid folder name for Firestore update")
+                showToast("Invalid folder name for Firestore update") // Important
             }
         } ?: run {
-            showToast("Invalid contact number for Firestore update")
+            showToast("Invalid contact number for Firestore update") // Important
         }
     }
 
@@ -612,7 +613,7 @@ class ShowHomeCardAct : AppCompatActivity() {
                     qaAdapter.submitList(qaList)
                 }
                 .addOnFailureListener { e ->
-                    showToast("Failed to fetch data: ${e.message}")
+                    showToast("Failed to fetch data: ${e.message}") // Important
                 }
         }
     }
@@ -686,15 +687,15 @@ class ShowHomeCardAct : AppCompatActivity() {
                                 }
                             }
                             .addOnFailureListener { e ->
-                                showToast("Failed to get download link for ${item.name}: ${e.message}")
+                                showToast("Failed to get download link for ${item.name}: ${e.message}") // Important
                             }
                     }
                 }
                 .addOnFailureListener { e ->
-                    showToast("Failed to list items in the folder: ${e.message}")
+                    showToast("Failed to list items in the folder: ${e.message}") // Important
                 }
         } else {
-            showToast("Invalid folder path")
+            showToast("Invalid folder path") // Important
         }
     }
 

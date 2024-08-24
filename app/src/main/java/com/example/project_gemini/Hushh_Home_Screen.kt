@@ -65,8 +65,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
 
     private val firestore = FirebaseFirestore.getInstance()
 
-
-
     private val PERMISSION_REQUEST_CODE = 1001
 
     private lateinit var cardRecycler: RecyclerView
@@ -74,8 +72,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
     private val cardItemList = mutableListOf<CustomCardItem>()
 
     private lateinit var lottieAnimationView: LottieAnimationView
-
-    // Define a list of card names
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,76 +83,45 @@ class Hushh_Home_Screen : AppCompatActivity() {
             return
         }
 
-
-
-
-
-
         setContentView(R.layout.activity_hushh_home_screen)
 
-        // Get the version code of the installed app
         val packageInfo = packageManager.getPackageInfo(packageName, 0)
         val installedVersionCode = packageInfo.versionCode.toString()
 
-        // Listen for changes in the version_update/versionCodehfs document
-        val versionUpdateRef = firestore.collection("version_update ").document("versionCodehfs")
+        val versionUpdateRef = firestore.collection("version_update").document("versionCodehfs")
         versionUpdateRef.addSnapshotListener { snapshot: DocumentSnapshot?, error: FirebaseFirestoreException? ->
             if (error != null) {
-                // Handle error
                 return@addSnapshotListener
             }
 
             if (snapshot != null && snapshot.exists()) {
-                // Retrieve the version code from the document
                 val firestoreVersionCode = snapshot.getString("versionCode") ?: ""
-
-                // Compare the version codes
                 if (firestoreVersionCode != installedVersionCode) {
-                    // If version codes are different, retrieve the update link
                     retrieveUpdateLink()
-                } else {
-                    // Versions are the same, do nothing
                 }
             }
         }
 
-
-
-
         textViewContact = findViewById(R.id.textView39)
         textCoinEarned = findViewById(R.id.textcoinearned)
-        //lottieAnimationView = findViewById(R.id.surprise)
 
         if (isBiometricAuthAvailable()) {
-            // Biometric authentication is available, proceed with authentication
             authenticateWithBiometric()
         } else {
-            // Biometric authentication is not available on this device
             showToast("Biometric authentication is not available on this device.")
         }
 
-
-
-
-
         val imageView46: ImageView = findViewById(R.id.imageView46)
-
         imageView46.setOnClickListener {
-            // Transfer to HushhJobAct when imageView46 is clicked
             val intent = Intent(this, HushhJobAct::class.java)
             startActivity(intent)
         }
 
-
-
         globalPhoneNumber = textViewContact.text.toString()
-
         val phoneNumberExtra = intent.getStringExtra("PHONE_NUMBER")
 
         if (!phoneNumberExtra.isNullOrEmpty()) {
             createHushhCoinsDocument(phoneNumberExtra)
-        } else {
-            // Handle the case when phoneNumberExtra is null or empty
         }
 
         if (!phoneNumberExtra.isNullOrEmpty()) {
@@ -173,13 +138,9 @@ class Hushh_Home_Screen : AppCompatActivity() {
             }
         }
 
-
-
         val imageView3: ImageView = findViewById(R.id.imageView3)
-
         imageView3.setOnClickListener {
             val phoneNumberExtra = textViewContact.text.toString()
-
             if (phoneNumberExtra.isNotEmpty()) {
                 val intent = Intent(this, NewCardMarketAct::class.java)
                 intent.putExtra("CONTACT_NUMBER", phoneNumberExtra)
@@ -189,9 +150,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
             }
         }
 
-        //card1 = findViewById(R.id.card)
-        //card2 = findViewById(R.id.card2)
-
         textViewCardName = findViewById(R.id.textView)
         textViewName = findViewById(R.id.textViewName)
         textViewContact = findViewById(R.id.textViewContact)
@@ -199,9 +157,7 @@ class Hushh_Home_Screen : AppCompatActivity() {
         textViewDob = findViewById(R.id.textViewDob)
         imageViewQR = findViewById(R.id.imageView9)
 
-        // Inside the onCreate method of Hushh_Home_Screen activity
         val imageView39: ImageView = findViewById(R.id.imageView39)
-
         imageView39.setOnClickListener {
             val intent = Intent(this, HushhCoinsEarnedAct::class.java)
             intent.putExtra("COIN_EARNED", textCoinEarned.text.toString())
@@ -210,39 +166,24 @@ class Hushh_Home_Screen : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val imageView45:ImageView = findViewById(R.id.imageView45)
-
+        val imageView45: ImageView = findViewById(R.id.imageView45)
         imageView45.setOnClickListener {
             showToast("You are already on the home screen")
         }
 
-
-
-
-
-
-
-
         cardRecycler = findViewById(R.id.cardrecycler)
         cardRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-        // Inside the onCreate method
         cardRecyclerAdapter = CardRecyclerAdapter(cardItemList) { parentName ->
             showToast("Clicked on item from $parentName")
-
-            // Get the additional data
             val name = textViewName.text.toString()
             val contact = textViewContact.text.toString()
             val email = textViewEmail.text.toString()
             val dob = textViewDob.text.toString()
 
-            // Redirect the user to ShowHomeCardAct with intent or shared preference
             val intent = Intent(this, ShowHomeCardAct::class.java)
             intent.putExtra("imageURL", getImageUrlForParentName(parentName))
             intent.putExtra("parentName", parentName)
             intent.putExtra("globalPhoneNumber", globalPhoneNumber)
-
-            // Pass additional data
             intent.putExtra("name", name)
             intent.putExtra("contact", contact)
             intent.putExtra("email", email)
@@ -251,14 +192,9 @@ class Hushh_Home_Screen : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         val carouselRecyclerview = findViewById<CarouselRecyclerview>(R.id.cardrecycler)
         carouselRecyclerview.adapter = cardRecyclerAdapter
 
-
-
-
-        // Set carousel properties
         carouselRecyclerview.apply {
             set3DItem(true)
             setAlpha(true)
@@ -267,26 +203,18 @@ class Hushh_Home_Screen : AppCompatActivity() {
         }
 
         fetchCardImagesFromFirebase(globalPhoneNumber)
-
     }
 
     private fun retrieveUpdateLink() {
-        // Retrieve the update link from the version_update/apkupdatedlink document
-        val updateLinkRef = firestore.collection("version_update ").document("apkupdatedlink")
+        val updateLinkRef = firestore.collection("version_update").document("apkupdatedlink")
         updateLinkRef.get()
             .addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()) {
-                    // Retrieve the link field from the document
                     val updateLink = documentSnapshot.getString("link")
-
-                    // Open the update link
                     openUpdateLink(updateLink)
-                } else {
-                    // Document does not exist or is empty, handle accordingly
                 }
             }
             .addOnFailureListener { e ->
-                // Handle failure to retrieve the update link
                 showToast("Failed to retrieve update link: ${e.message}")
             }
     }
@@ -295,37 +223,29 @@ class Hushh_Home_Screen : AppCompatActivity() {
         link?.let {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
             startActivity(intent)
-            // Close the app
             finish()
         } ?: showToast("Update link is empty.")
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_UPDATE_APP) {
             if (resultCode == RESULT_CANCELED) {
-                // User canceled the intent, close the app
                 finish()
             }
         }
     }
 
-
     private fun createHushhCoinsDocument(phoneNumber: String) {
         val firestore = FirebaseFirestore.getInstance()
-
-        // Reference to the hushhcoins collection
         val hushhCoinsCollectionRef = firestore.collection("users")
             .document(phoneNumber)
             .collection("coins")
 
-        // Check if the hushhcoins document already exists
         hushhCoinsCollectionRef.document("hushhcoins")
             .get()
             .addOnSuccessListener { documentSnapshot ->
                 if (!documentSnapshot.exists()) {
-                    // If not, create the hushhcoins document with an initial value of 0
                     hushhCoinsCollectionRef.document("hushhcoins")
                         .set(mapOf("hushh_signup" to 500))
                         .addOnSuccessListener {
@@ -343,13 +263,11 @@ class Hushh_Home_Screen : AppCompatActivity() {
             }
     }
 
-
     private fun addCoinEarnedFieldIfNotExists(phoneNumber: String) {
         val usersCollection = firestore.collection("users")
         val userDocumentRef = usersCollection.document(phoneNumber)
         val coinsCollection = userDocumentRef.collection("coins")
 
-        // Create "coins" subcollection if it doesn't exist
         coinsCollection.addSnapshotListener { coinsCollectionSnapshot, _ ->
             if (coinsCollectionSnapshot?.documents.isNullOrEmpty()) {
                 coinsCollection.document("hushhcoins")
@@ -358,16 +276,14 @@ class Hushh_Home_Screen : AppCompatActivity() {
                         showToast("Added 'hushhcoins' subcollection with 'hushh_signup' field.")
                     }
                     .addOnFailureListener { e ->
-
+                        // Commented out to remove non-critical Toast message
+                        // showToast("Failed to add 'hushhcoins' subcollection: ${e.message}")
                     }
             } else {
-                // "coins" subcollection exists, check if "hushhcoins" document exists
                 val hushhCoinsDocumentRef = coinsCollection.document("hushhcoins")
-
                 hushhCoinsDocumentRef.get()
                     .addOnSuccessListener { hushhCoinsDocumentSnapshot ->
                         if (!hushhCoinsDocumentSnapshot.exists()) {
-                            // "hushhcoins" document does not exist, create it
                             hushhCoinsDocumentRef
                                 .set(mapOf("hushh_signup" to 0))
                                 .addOnSuccessListener {
@@ -382,12 +298,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
         }
     }
 
-
-
-
-    // ... (other methods)
-
-
     @RequiresApi(Build.VERSION_CODES.P)
     private fun authenticateWithBiometric() {
         val biometricPrompt = BiometricPrompt.Builder(this)
@@ -400,7 +310,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
         biometricPrompt.authenticate(getCancellationSignal(), mainExecutor, authenticationCallback)
     }
 
-
     private fun getCancellationSignal(): CancellationSignal {
         return CancellationSignal()
     }
@@ -408,7 +317,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
     private fun notifyUser(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
 
     private val authenticationCallback: BiometricPrompt.AuthenticationCallback
         get() =
@@ -423,7 +331,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
                     super.onAuthenticationSucceeded(result)
                     notifyUser("Authentication Succeeded")
 
-                    // Check if "hushh_signup" is not equal to zero
                     val phoneNumber = textViewContact.text.toString()
                     val coinsCollection = firestore.collection("users").document(phoneNumber).collection("coins")
 
@@ -431,17 +338,12 @@ class Hushh_Home_Screen : AppCompatActivity() {
                         .get()
                         .addOnSuccessListener { documentSnapshot ->
                             val hushhSignupCoins = documentSnapshot.getLong("hushh_signup") ?: 0
-
-                            // Skip animation if "hushh_signup" is not equal to zero
                             if (hushhSignupCoins != 0L) {
                                 checkAndUpdateFirestore()
                             } else {
-                                // Start Lottie animation when biometric authentication starts
                                 lottieAnimationView.playAnimation()
                                 lottieAnimationView.visibility = View.VISIBLE
                                 checkAndUpdateFirestore()
-
-                                // Delay for 2 seconds before checking and updating Firestore
                                 Handler().postDelayed({
                                     lottieAnimationView.cancelAnimation()
                                     lottieAnimationView.visibility = View.GONE
@@ -462,8 +364,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
             .get()
             .addOnSuccessListener { documentSnapshot ->
                 val hushhSignupCoins = documentSnapshot.getLong("hushh_signup") ?: 0
-
-                // Check conditions and update Firestore
                 if (hushhSignupCoins >= 0 && hushhSignupCoins < 500) {
                     coinsCollection.document("hushhcoins")
                         .update("hushh_signup", 500)
@@ -471,7 +371,8 @@ class Hushh_Home_Screen : AppCompatActivity() {
                             showToast("Updated 'hushh_signup' field with value 500.")
                         }
                         .addOnFailureListener { e ->
-
+                            // Commented out to remove non-critical Toast message
+                            // showToast("Failed to update 'hushh_signup' field: ${e.message}")
                         }
                 }
             }
@@ -479,9 +380,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
                 showToast("Failed to retrieve user data: ${e.message}")
             }
     }
-
-
-
 
     private fun isBiometricAuthAvailable(): Boolean {
         val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
@@ -493,9 +391,7 @@ class Hushh_Home_Screen : AppCompatActivity() {
                 packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
     }
 
-
     private fun getImageUrlForParentName(parentName: String): String? {
-        // Add logic to get the imageURL for the given parentName from cardItemList
         val matchingItem = cardItemList.find { it.parentName == parentName }
         return matchingItem?.imageUrl
     }
@@ -509,19 +405,17 @@ class Hushh_Home_Screen : AppCompatActivity() {
         val databaseReference = FirebaseDatabase.getInstance().reference
         val cardsReference = databaseReference.child("users").child(contactNumber)
 
-        cardsReference.addListenerForSingleValueEvent(object : ValueEventListener {
+        // Use addValueEventListener to listen for real-time updates
+        cardsReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 cardItemList.clear()
-
                 for (cardSnapshot in snapshot.children) {
-                    val parentName = cardSnapshot.key // Get the parent node name
+                    val parentName = cardSnapshot.key
                     val imageUrl = cardSnapshot.child("imageURL").getValue(String::class.java)
                     if (!imageUrl.isNullOrEmpty()) {
                         cardItemList.add(CustomCardItem(imageUrl, parentName!!))
                     }
                 }
-
-                // Notify the adapter that the data set has changed
                 cardRecyclerAdapter.notifyDataSetChanged()
             }
 
@@ -531,114 +425,48 @@ class Hushh_Home_Screen : AppCompatActivity() {
         })
     }
 
-
-
-
-    /*private fun flipCard() {
-            val visibleCard: View
-            val invisibleCard: View
-
-            if (isCard1Visible) {
-                visibleCard = card1
-                invisibleCard = card2
-
-                findViewById<View>(R.id.cardrecycler).visibility = View.GONE
-                findViewById<View>(R.id.labelbrandcard).visibility = View.GONE
-
-            } else {
-                visibleCard = card2
-                invisibleCard = card1
-
-                findViewById<View>(R.id.cardrecycler).visibility = View.VISIBLE
-                findViewById<View>(R.id.labelbrandcard).visibility = View.VISIBLE
-            }
-
-            val animatorOut = ObjectAnimator.ofFloat(visibleCard, "rotationY", 0f, 90f)
-            animatorOut.duration = 120
-            animatorOut.interpolator = AccelerateDecelerateInterpolator()
-
-            val animatorIn = ObjectAnimator.ofFloat(invisibleCard, "rotationY", -90f, 0f)
-            animatorIn.duration = 120
-            animatorIn.interpolator = AccelerateDecelerateInterpolator()
-
-            animatorOut.start()
-            animatorOut.addListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animation: Animator) {}
-                override fun onAnimationEnd(animation: Animator) {
-                    visibleCard.visibility = View.GONE
-                    invisibleCard.visibility = View.VISIBLE
-                    animatorIn.start()
-                }
-
-                override fun onAnimationCancel(animation: Animator) {}
-                override fun onAnimationRepeat(animation: Animator) {}
-            })
-
-            isCard1Visible = !isCard1Visible
-        }*/
-
-    // Inside the retrieveAdditionalDataFromFirestore function
-
     private fun retrieveAdditionalDataFromFirestore(phoneNumber: String) {
         showToast("Phone Number: $phoneNumber")
 
         globalPhoneNumber = phoneNumber
-
-        // Reference to the hushhcoins collection
         val hushhCoinsCollectionRef = firestore.collection("users")
             .document(phoneNumber)
             .collection("coins")
 
-        // Add a real-time listener to hushhcoins collection
         hushhCoinsCollectionRef.addSnapshotListener { querySnapshot, error ->
             if (error != null) {
-
                 return@addSnapshotListener
             }
 
             if (querySnapshot != null) {
                 var totalCoins: Long = 0L
-
-                // Iterate through the documents
                 for (document in querySnapshot.documents) {
-                    // Iterate through the fields inside each document
                     for (field in document.data.orEmpty()) {
                         val coinsValue = (field.value as? Long) ?: 0
                         totalCoins += coinsValue
                     }
                 }
 
-
-
-                // Update the TextView with the total sum
                 textCoinEarned.text = totalCoins.toString()
-
-                // Save the totalCoins value in Firestore under "CurrentTotalCoins" field
                 saveTotalCoinsToFirestore(phoneNumber, totalCoins)
 
-
-                // Continue with fetching other user data if needed
                 firestore.collection("users")
                     .document(phoneNumber)
                     .get()
                     .addOnSuccessListener { documentSnapshotUser ->
                         if (documentSnapshotUser.exists()) {
                             val additionalData = documentSnapshotUser.toObject(UserModel::class.java)
-
                             textViewName.text = "${additionalData?.firstName} ${additionalData?.lastName}"
                             textViewCardName.text = "${additionalData?.firstName} ${additionalData?.lastName}"
                             textViewContact.text = additionalData?.phoneNumber ?: ""
                             textViewEmail.text = additionalData?.emailAddress
                             textViewDob.text = additionalData?.birthday
-
                             generateQRCode()
                         }
                     }
                     .addOnFailureListener { e ->
                         e.printStackTrace()
                     }
-            } else {
-
             }
         }
     }
@@ -647,7 +475,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
         val usersCollection = firestore.collection("users")
         val userDocumentRef = usersCollection.document(phoneNumber)
 
-        // Update the "CurrentTotalCoins" field with the new totalCoins value
         userDocumentRef
             .update("CurrentTotalCoins", totalCoins)
             .addOnSuccessListener {
@@ -657,7 +484,6 @@ class Hushh_Home_Screen : AppCompatActivity() {
                 showToast("Failed to update 'CurrentTotalCoins' field: ${e.message}")
             }
     }
-
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -680,6 +506,7 @@ class Hushh_Home_Screen : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
     companion object {
         private const val REQUEST_CODE_UPDATE_APP = 1001
     }

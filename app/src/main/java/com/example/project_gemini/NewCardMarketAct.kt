@@ -38,8 +38,6 @@ class NewCardMarketAct : AppCompatActivity() {
         setupRecyclerView("Travel, Roam, Explore", binding.horizontalGridView4, contactNumber, false)
         setupRecyclerView("Shopping, Hunt, Obtain", binding.horizontalGridView5, contactNumber, false)
         setupRecyclerView("Hospitality, Stay, Accommodation", binding.horizontalGridView6, contactNumber, false)
-
-
     }
 
     private fun setupRecyclerView(category: String, recyclerView: RecyclerView, contactNumber: String?, isHorizontal: Boolean) {
@@ -76,7 +74,8 @@ class NewCardMarketAct : AppCompatActivity() {
                 recyclerView.adapter = adapter
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(this, "Failed to fetch items", Toast.LENGTH_SHORT).show()
+                // Commented out non-essential Toast
+                // Toast.makeText(this, "Failed to fetch items", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -97,7 +96,7 @@ class NewCardMarketAct : AppCompatActivity() {
                 imageSlider.setImageList(imageList)
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(this, "Poor internet connection", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Poor internet connection", Toast.LENGTH_SHORT).show() // Important feedback for user
             }
     }
 }

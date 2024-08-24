@@ -29,13 +29,35 @@ import com.example.project_gemini.composeact.ui.theme.Project_GeminiTheme
 import com.google.android.gms.ads.*
 
 class MiniStoreAct : ComponentActivity() {
+
+    private lateinit var adView: AdView  // Declare AdView here
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Get the parentName from the intent
+        val parentName = intent.getStringExtra("parentName")
+
+        // Determine the URL based on parentName
+        val url = when (parentName) {
+            "OAC Canteen" -> "https://hushh-for-students-store-vone.mini.site"
+            "Thapa mess" -> "https://hushh-for-students.mini.store"
+            else -> "https://default-url.com" // Optional: default URL in case none match
+        }
 
         // Initialize the Google Mobile Ads SDK
         MobileAds.initialize(this) { initializationStatus ->
             Log.d("AdMob", "MobileAds initialized: $initializationStatus")
         }
+
+        // Initialize the AdView with the ad unit ID and set the ad size
+        adView = AdView(this)
+        adView.adUnitId = "ca-app-pub-5762805546760080/2402272486"
+        adView.setAdSize(AdSize.BANNER)
+
+        // Load the ad with an AdRequest
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
 
         setContent {
             Project_GeminiTheme {
@@ -44,19 +66,19 @@ class MiniStoreAct : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Column(modifier = Modifier.fillMaxSize()) {
-                        // Box container to hold the WebView and TopBar components
                         Box(modifier = Modifier.weight(1f)) {
                             Column(modifier = Modifier.fillMaxSize()) {
                                 MiniStoreTopBar()
-                                WebViewScreen("https://hushh-for-students-store-vone.mini.site")
+                                WebViewScreen(url)
+                            // Pass the determined URL here
                             }
                         }
-                        // Banner ad positioned at the bottom of the screen
-                        BannerAdView(
+                        // Display AdView at the bottom for fast loading
+                        AndroidView(
+                            factory = { adView },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(50.dp)
-
                         )
                     }
                 }
@@ -159,7 +181,6 @@ fun WebViewScreen(url: String) {
                 }
             }
 
-
             loadUrl(url)
         }
     }, modifier = Modifier.fillMaxSize())
@@ -170,9 +191,8 @@ fun BannerAdView(modifier: Modifier = Modifier) {
     AndroidView(
         factory = { context ->
             AdView(context).apply {
-                //Ad Unit ID
+                // Ad Unit ID
                 adUnitId = "ca-app-pub-5762805546760080/8838714550"
-
 
                 // Set ad size
                 setAdSize(AdSize.BANNER)
@@ -224,7 +244,7 @@ fun GreetingPreview2() {
                     WebViewScreen("https://hushh-for-students-store-vone.mini.site")
                 }
             }
-            // Preview for BannerAdView at the bottom
+            // Include the banner ad in preview for completeness
             BannerAdView(
                 modifier = Modifier
                     .fillMaxWidth()

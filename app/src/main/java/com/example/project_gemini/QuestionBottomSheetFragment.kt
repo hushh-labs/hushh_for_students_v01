@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -63,19 +62,13 @@ class QuestionBottomSheetFragment(private val title: String, private val contact
                     if (documentSnapshot.exists()) {
                         val category = documentSnapshot.getString("Category")
                         category?.let { fetchedCategory ->
-                            Toast.makeText(
-                                context,
-                                "$title",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            // Commented out non-essential Toast
+                            // Toast.makeText(context, "$title", Toast.LENGTH_SHORT).show()
 
                             val matchingIndex = findMatchingIndex(fetchedCategory)
                             if (matchingIndex != -1) {
-                                Toast.makeText(
-                                    context,
-                                    "Matched category at index $matchingIndex: $fetchedCategory",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                // Commented out non-essential Toast
+                                // Toast.makeText(context, "Matched category at index $matchingIndex: $fetchedCategory", Toast.LENGTH_SHORT).show()
 
                                 // Set the current question category based on the matching index
                                 currentQuestionCategory = when (matchingIndex) {
@@ -91,21 +84,19 @@ class QuestionBottomSheetFragment(private val title: String, private val contact
                                 // Call setupQuestion after setting the category
                                 setupQuestion()
                             } else {
-                                Toast.makeText(
-                                    context,
-                                    "Category '$fetchedCategory' does not match any predefined category.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                // Commented out non-essential Toast
+                                // Toast.makeText(context, "Category '$fetchedCategory' does not match any predefined category.", Toast.LENGTH_SHORT).show()
                             }
                         }
                     } else {
                         // Document does not exist
-                        Toast.makeText(context, "Document not found for title '$title'", Toast.LENGTH_SHORT).show()
+                        // Commented out non-essential Toast
+                        // Toast.makeText(context, "Document not found for title '$title'", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener { e ->
                     // Handle failure
-                    Toast.makeText(context, "Failed to fetch category: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Failed to fetch category: ${e.message}", Toast.LENGTH_SHORT).show() // Important: Inform the user of the failure
                 }
         }
     }
@@ -159,7 +150,7 @@ class QuestionBottomSheetFragment(private val title: String, private val contact
             } else {
                 // All questions answered, close the dialog and show success message
                 dismiss()
-                Toast.makeText(context, "Awesome! You are done with the last question.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Awesome! You are done with the last question.", Toast.LENGTH_SHORT).show() // Important: Inform the user of the success
 
                 // Transfer to ShowFinalCardAct
                 val intent = Intent(context, ShowFinalCardAct::class.java)
@@ -169,10 +160,9 @@ class QuestionBottomSheetFragment(private val title: String, private val contact
             }
         } else {
             // User needs to select an option
-            Toast.makeText(context, "Please select an option", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Please select an option", Toast.LENGTH_SHORT).show() // Important: Inform the user of the required action
         }
     }
-
 
     private fun saveResponseToFirestore(questionIndex: Int, selectedOption: String) {
         // Create a map to represent the user's response
@@ -203,7 +193,7 @@ class QuestionBottomSheetFragment(private val title: String, private val contact
                             }
                             .addOnFailureListener { e ->
                                 // Handle failure
-                                Toast.makeText(context, "Failed to update response: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Failed to update response: ${e.message}", Toast.LENGTH_SHORT).show() // Important: Inform the user of the failure
                             }
                         return@addOnSuccessListener
                     }
@@ -217,16 +207,15 @@ class QuestionBottomSheetFragment(private val title: String, private val contact
                         }
                         .addOnFailureListener { e ->
                             // Handle failure
-                            Toast.makeText(context, "Failed to store response: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Failed to store response: ${e.message}", Toast.LENGTH_SHORT).show() // Important: Inform the user of the failure
                         }
                 }
                 .addOnFailureListener { e ->
                     // Handle failure
-                    Toast.makeText(context, "Failed to check for existing response: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Failed to check for existing response: ${e.message}", Toast.LENGTH_SHORT).show() // Important: Inform the user of the failure
                 }
         }
     }
-
 
     private fun updateTitleCompletion(contactNumber: String, documentId: String) {
         context?.let { nonNullContext ->
@@ -236,7 +225,7 @@ class QuestionBottomSheetFragment(private val title: String, private val contact
                 .update(mapOf(title to true))
                 .addOnSuccessListener {
                     // Successfully updated the "title" field
-                    Toast.makeText(nonNullContext, "Title completion updated successfully!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(nonNullContext, "Title completion updated successfully!", Toast.LENGTH_SHORT).show() // Important: Inform the user of the success
 
                     // Add field in the "coins" collection as described
                     firestore.collection("users")
@@ -247,17 +236,19 @@ class QuestionBottomSheetFragment(private val title: String, private val contact
                         .addOnSuccessListener {
                             // Successfully updated the "hushhcoins" field
                             Toast.makeText(nonNullContext, "Coins updated successfully!", Toast.LENGTH_SHORT).show()
+                        // Important: Inform the user of the success
                         }
                         .addOnFailureListener { e ->
                             // Handle failure
                             Toast.makeText(nonNullContext, "Failed to update coins: ${e.message}", Toast.LENGTH_SHORT).show()
+                        // Important: Inform the user of the failure
                         }
                 }
                 .addOnFailureListener { e ->
                     // Handle failure
                     Toast.makeText(nonNullContext, "Failed to update title completion: ${e.message}", Toast.LENGTH_SHORT).show()
+                // Important: Inform the user of the failure
                 }
         }
     }
-
 }
