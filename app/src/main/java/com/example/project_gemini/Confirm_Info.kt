@@ -106,7 +106,7 @@ class Confirm_Info : AppCompatActivity() {
                 // Store user data locally using SharedPreferences
                 saveToSharedPreferences(userModel)
 
-                // Open the login activity
+                // Open the hushh_home_screen activity
                 val hushhHomeIntent = Intent(this, Hushh_Home_Screen::class.java)
                 hushhHomeIntent.putExtra("PHONE_NUMBER", userModel.phoneNumber)  // Pass the user's phone number
                 startActivity(hushhHomeIntent)
@@ -114,7 +114,15 @@ class Confirm_Info : AppCompatActivity() {
             .addOnFailureListener {
                 showToast("Something went wrong") // Important: Inform the user of failure
             }
+
+
     }
+
+//    private fun supabase() {
+//        TODO("Not yet implemented")
+//    }
+
+
 
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
