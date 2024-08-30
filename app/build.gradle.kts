@@ -37,8 +37,8 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
-        viewBinding  = true
+    buildFeatures {
+        viewBinding = true
         compose = true
     }
     composeOptions {
@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -61,7 +62,7 @@ dependencies {
     implementation("com.google.firebase:firebase-database:20.3.0")
 
 
-    implementation ("com.github.sparrow007:carouselrecyclerview:1.2.6")
+    implementation("com.github.sparrow007:carouselrecyclerview:1.2.6")
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
 

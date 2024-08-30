@@ -34,7 +34,6 @@ class Register_Activity : AppCompatActivity() {
     private lateinit var googleApiClient: GoogleApiClient
     private lateinit var auth: FirebaseAuth
     private lateinit var countryCodeSpinner: TextView
-
     private val countryCodes = mapOf(
         "IN" to "91",
         "US" to "1",
@@ -83,9 +82,6 @@ class Register_Activity : AppCompatActivity() {
         "CH" to "41"
         // Add more countries as needed
     )
-
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -305,7 +301,6 @@ class Register_Activity : AppCompatActivity() {
     }
 
 
-
     private fun navigateToConfirmInfo() {
         val user = auth.currentUser
         val userName = user?.displayName
@@ -325,11 +320,6 @@ class Register_Activity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
-
-
-
-
 
 
     // Rest of your existing code...
@@ -430,13 +420,15 @@ class Register_Activity : AppCompatActivity() {
 
         val intent = Intent(this@Register_Activity, Otp_Activity::class.java).apply {
             putExtra("verificationId", verificationId)
-            putExtra("phoneNumber", findViewById<EditText>(R.id.phoneNumberEditText).text.toString())
+            putExtra(
+                "phoneNumber",
+                findViewById<EditText>(R.id.phoneNumberEditText).text.toString()
+            )
             putExtra("COUNTRY_CODE", countryCode) // Pass the country code
         }
         startActivity(intent)
         finish()
     }
-
 
 
 }

@@ -8,7 +8,5 @@ data class UserModel(
     val phoneNumber: String = "",
     val emailAddress: String = "",
     val birthday: String = "",
-
-
 )
 
