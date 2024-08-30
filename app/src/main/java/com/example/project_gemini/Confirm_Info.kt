@@ -120,6 +120,8 @@ class Confirm_Info : AppCompatActivity() {
                 hushhHomeIntent.putExtra("PHONE_NUMBER", userModel.phoneNumber)  // Pass the user's phone number
                 startActivity(hushhHomeIntent)
             }
+
+
             .addOnFailureListener {
                 showToast("Something went wrong") // Important: Inform the user of failure
             }
