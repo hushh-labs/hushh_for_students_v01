@@ -131,6 +131,7 @@ class Confirm_Info : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
         return sharedPreferences.getString("userId", null)
     }
+    //Supabase Adding the user
     private fun addUserToSupabase(userModel: UserModel) {
         val uid = getUserUid()
 
@@ -215,6 +216,7 @@ class Confirm_Info : AppCompatActivity() {
         editor.apply()
     }
 }
+//This is Supabase Client
 object SupabaseClient {
     private const val SUPABASE_URL = "https://rpmzykoxqnbozgdoqbpc.supabase.co/rest/v1/"
     private const val API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwbXp5a294cW5ib3pnZG9xYnBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE5Mjc5NzEsImV4cCI6MjAxNzUwMzk3MX0.3GwG8YQKwZSWfGgTBEEA47YZAZ-Nr4HiirYPWiZtpZ0" // Replace with your actual Supabase API Key
