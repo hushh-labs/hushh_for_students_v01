@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
@@ -88,17 +89,40 @@ class Hushh_Home_Screen : AppCompatActivity() {
         val packageInfo = packageManager.getPackageInfo(packageName, 0)
         val installedVersionCode = packageInfo.versionCode.toString()
 
-        val versionUpdateRef = firestore.collection("version_update").document("versionCodehfs")
+        Log.d("VersionCheck", "Installed Version Code: $installedVersionCode")
+
+        Toast.makeText(this, "Installed Version Code: $installedVersionCode", Toast.LENGTH_SHORT).show()
+
+        val versionUpdateRef = firestore.collection("version_update ").document("versionCodehfs")
         versionUpdateRef.addSnapshotListener { snapshot: DocumentSnapshot?, error: FirebaseFirestoreException? ->
             if (error != null) {
+                Log.e("VersionCheck", "Error fetching Firestore version: ${error.message}")
+                Toast.makeText(this, "Error fetching Firestore version: ${error.message}", Toast.LENGTH_SHORT).show()
                 return@addSnapshotListener
             }
 
-            if (snapshot != null && snapshot.exists()) {
-                val firestoreVersionCode = snapshot.getString("versionCode") ?: ""
-                if (firestoreVersionCode != installedVersionCode) {
-                    retrieveUpdateLink()
+            if (snapshot != null) {
+                Log.d("VersionCheck", "Snapshot is not null")
+                if (snapshot.exists()) {
+                    val firestoreVersionCode = snapshot.getString("versionCode") ?: ""
+                    Log.d("VersionCheck", "Firestore Version Code Retrieved: $firestoreVersionCode")
+                    Toast.makeText(this, "Firestore Version Code: $firestoreVersionCode", Toast.LENGTH_SHORT).show()
+
+                    if (firestoreVersionCode != installedVersionCode) {
+                        Log.d("VersionCheck", "Version mismatch: Firestore version is $firestoreVersionCode, installed version is $installedVersionCode")
+                        Toast.makeText(this, "Version mismatch: Updating app...", Toast.LENGTH_SHORT).show()
+                        retrieveUpdateLink()
+                    } else {
+                        Log.d("VersionCheck", "App is up-to-date.")
+                        Toast.makeText(this, "App is up-to-date.", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Log.d("VersionCheck", "Snapshot exists check failed")
+                    Toast.makeText(this, "No version info found in Firestore.", Toast.LENGTH_SHORT).show()
                 }
+            } else {
+                Log.d("VersionCheck", "Snapshot is null")
+                Toast.makeText(this, "No version info found in Firestore.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -206,12 +230,15 @@ class Hushh_Home_Screen : AppCompatActivity() {
     }
 
     private fun retrieveUpdateLink() {
-        val updateLinkRef = firestore.collection("version_update").document("apkupdatedlink")
+        val updateLinkRef = firestore.collection("version_update ").document("apkupdatedlink")
         updateLinkRef.get()
             .addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()) {
                     val updateLink = documentSnapshot.getString("link")
                     openUpdateLink(updateLink)
+                } else {
+                    Log.e("VersionCheck", "Update link document does not exist.")
+                    Toast.makeText(this, "Update link document does not exist.", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { e ->
@@ -220,11 +247,15 @@ class Hushh_Home_Screen : AppCompatActivity() {
     }
 
     private fun openUpdateLink(link: String?) {
-        link?.let {
+        if (link != null && link.isNotEmpty()) {
+            Log.d("VersionCheck", "Opening update link: $link")
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
             startActivity(intent)
             finish()
-        } ?: showToast("Update link is empty.")
+        } else {
+            Log.e("VersionCheck", "Update link is empty or null.")
+            Toast.makeText(this, "Update link is empty.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
